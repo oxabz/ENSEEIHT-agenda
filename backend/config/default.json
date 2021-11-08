@@ -43,5 +43,9 @@
         "secret": "<github oauth secret>"
       }
     }
+  },
+  "postgres": {
+    "client": "pg",
+    "connection": "postgres://postgres:postgres@localhost:5432/fs-enseeiht-agenda"
   }
 }
