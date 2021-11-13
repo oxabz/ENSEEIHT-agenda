@@ -5,7 +5,7 @@
 import { Knex } from 'knex';
 import { Application } from '../declarations';
 
-export default function (app: Application): Knex {
+export default function (app: Application):Knex {
   const db: Knex = app.get('knexClient');
   const tableName = 'agenda';
   db.schema.hasTable(tableName).then(exists => {
