@@ -22,6 +22,7 @@ import knex from './knex';
 const app: Application = express(feathers());
 export type HookContext<T = any> = { app: Application } & FeathersHookContext<T>;
 
+// Promise that allows us to initiate thing asynchronously (Ex : knex.ts)
 export default new Promise<Application>(async (resolve, ) => {
   // Load app configuration
   app.configure(configuration());
