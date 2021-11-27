@@ -13,7 +13,7 @@ export default {
         submit(){
             if(this.newAgendaName.length == 0)return;
             console.log(this.$store)
-            this.$store.dispatch('agendaModule/createAgenda',{
+            this.$store.dispatch('agenda/createAgenda',{
                 name: this.newAgendaName
             })
         }

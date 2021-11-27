@@ -9,15 +9,21 @@ const state = {
 
 const mutations = {
     addEntry(state, {agendaId, entry}){
+        if(state.entrie[entry.id]!=undefined)return;
         if (state.entriesOfAgenda[agendaId || entry.agendaId]==undefined)
             state.entriesOfAgenda[agendaId || entry.agendaId] = [];
         state.entrie[entry.id] = entry;
         state.entriesOfAgenda[agendaId || entry.agendaId].push(entry.id);
         return state;
     },
+    editEntry(state, entry){
+        if(state.entrie[entry.id]==undefined)return;
+        state.entrie[entry.id] = entry;
+    },
     remove(state, entryId){
-        delete state.entries[entryId]
-        return
+        if(state.entrie[entryId]==undefined)return;
+        delete state.entries[entryId];
+        return state;
     }
 }
 
@@ -41,4 +47,23 @@ const actions = {
     }
 }
 
-export default {namespaced: true ,state, mutations, actions}
+const plugin = store => {
+    service.on('create', entry => {
+        if(store.state.entry.entriesOfAgenda[entry.agendaId]==undefined)return;
+        store.commit('addEntry',entry);
+    });
+
+    service.on('update', entry => {
+        store.commit('editEntry',entry);
+    });
+
+    service.on('patch', entry => {
+        store.commit('editEntry',entry);
+    });
+    
+    service.on('remove', entry => {
+        store.commit('removeEntry',entry.id);
+    });
+}
+
+export default {namespaced: true ,state, mutations, actions, plugins:[plugin]}

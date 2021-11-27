@@ -8,9 +8,9 @@
 export default {
     computed:{
         agendaEntries(){
-            const module = this.$store.state.entryModule;
+            const module = this.$store.state.entry;
             if (module.entriesOfAgenda[this.$route.params.id] == undefined){
-                this.$store.dispatch('entryModule/queryEntriesOfAgenda',this.$route.params.id);
+                this.$store.dispatch('entry/queryEntriesOfAgenda',this.$route.params.id);
                 return [];
             }
             return module.entriesOfAgenda[this.$route.params.id].map(id => module.entries[id]);

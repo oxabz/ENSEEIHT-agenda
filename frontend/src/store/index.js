@@ -1,6 +1,9 @@
 import { createStore } from 'vuex'
 import agendaModule from './modules/agenda'
 import entryModule from './modules/entry'
+
+
+
 export default createStore({
     state: {
     },
@@ -9,7 +12,7 @@ export default createStore({
     actions: {
     },
     modules: {
-        agendaModule,
-        entryModule
+        agenda:agendaModule,
+        entry:entryModule
     }
 })
