@@ -36,10 +36,10 @@ const actions = {
     },
     queryEntriesOfAgenda({commit}, agendaId){
         return service.find({
-            agendaId
+            query:{agendaId}
         }).then((result)=>{
             result.data.forEach((entry)=>{
-                commit('addEntry', {agendaId,entry});
+                commit('addEntry', {agendaId, entry});
             })
         }).catch((err)=>{
             console.error(err);

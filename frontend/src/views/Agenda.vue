@@ -2,10 +2,21 @@
 <div>
     <div>{{ $route.params.id }}</div>
     <p>{{agendaEntries}}</p>
+    <button v-on:click="create()"></button>
 </div>
 </template>
 <script>
 export default {
+    methods:{
+        create(){
+            const agendaId = this.$route.params.id;
+            this.$store.dispatch('entry/createEntry', {
+                agendaId,
+                titre:'test',
+                description:'test'
+            })
+        }
+    },
     computed:{
         agendaEntries(){
             const module = this.$store.state.entry;

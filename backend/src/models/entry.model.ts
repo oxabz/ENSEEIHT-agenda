@@ -12,10 +12,10 @@ export default function (app: Application): Knex {
     if(!exists) {
       db.schema.createTable(tableName, table => {
         table.uuid('id').primary().defaultTo(db.raw('(uuid_generate_v4())'));
-        table.string('titre');
+        table.string('title');
         table.string('description');
-        table.dateTime('date_debut');
-        table.dateTime('date_fin');
+        table.dateTime('start_date');
+        table.dateTime('end_date');
         table.uuid('agenda_id');
         table.foreign('agenda_id').references('agenda.id').onDelete('CASCADE');
       })
