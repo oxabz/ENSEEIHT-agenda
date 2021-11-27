@@ -9,19 +9,19 @@ const state = {
 
 const mutations = {
     addEntry(state, {agendaId, entry}){
-        if(state.entrie[entry.id]!=undefined)return;
+        if(state.entries[entry.id]!=undefined)return;
         if (state.entriesOfAgenda[agendaId || entry.agendaId]==undefined)
             state.entriesOfAgenda[agendaId || entry.agendaId] = [];
-        state.entrie[entry.id] = entry;
+        state.entries[entry.id] = entry;
         state.entriesOfAgenda[agendaId || entry.agendaId].push(entry.id);
         return state;
     },
     editEntry(state, entry){
-        if(state.entrie[entry.id]==undefined)return;
-        state.entrie[entry.id] = entry;
+        if(state.entries[entry.id]==undefined)return;
+        state.entries[entry.id] = entry;
     },
     remove(state, entryId){
-        if(state.entrie[entryId]==undefined)return;
+        if(state.entries[entryId]==undefined)return;
         delete state.entries[entryId];
         return state;
     }
