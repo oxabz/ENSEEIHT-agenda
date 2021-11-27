@@ -14,10 +14,10 @@ export default function (app: Application): Knex {
         table.uuid('id').primary().defaultTo(db.raw('(uuid_generate_v4())'));
         table.string('title');
         table.string('description');
-        table.dateTime('start_date');
-        table.dateTime('end_date');
-        table.uuid('agenda_id');
-        table.foreign('agenda_id').references('agenda.id').onDelete('CASCADE');
+        table.dateTime('startDate');
+        table.dateTime('endDate');
+        table.uuid('agendaId');
+        table.foreign('agendaId').references('agenda.id').onDelete('CASCADE');
       })
         .then(() => console.log(`Created ${tableName} table`))
         .catch(e => console.error(`Error creating ${tableName} table`, e));
