@@ -1,18 +1,12 @@
 
 <template>
-  <main class="container">
+  <main class="">
     <router-view/>
   </main>
-</template>
-<script>
-import '@/assets/pico.css';
-export default {
   
-}
-</script>
-
+</template>
 <style scoped>
-@import '/assets/pico.css';
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

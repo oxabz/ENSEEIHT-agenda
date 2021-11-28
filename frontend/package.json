@@ -11,9 +11,12 @@
     "@feathersjs/authentication-client": "^4.5.11",
     "@feathersjs/feathers": "^4.5.11",
     "@feathersjs/socketio-client": "^4.5.11",
+    "autoprefixer": "^9",
     "core-js": "^3.6.5",
     "feathers-hooks-common": "^5.0.6",
+    "postcss": "^7",
     "socket.io-client": "2",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"

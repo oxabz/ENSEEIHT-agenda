@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import agendaModule from './modules/agenda'
 import entryModule from './modules/entry'
+import sidebarModule from './modules/sidebar'
 
 
 
@@ -13,6 +14,7 @@ export default createStore({
     },
     modules: {
         agenda:agendaModule,
-        entry:entryModule
+        entry:entryModule,
+        sidebar:sidebarModule
     }
 })
