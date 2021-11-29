@@ -8,7 +8,7 @@
         <p class="mb-5">
           Utilisez cette agenda révolutionaire dés aujourd'hui!  
         </p> 
-        <NewAgenda title="Créez votre premier calendrier" label="Go !"/>
+        <NewAgenda title="Créez votre premier calendrier" label="Go !" :onCreate="handleCreate"/>
       </div>
     </div>
   </div>
@@ -22,6 +22,11 @@ export default {
   name: 'Home',
   components: {
     NewAgenda
+  },
+  methods:{
+    handleCreate(agenda){
+      this.$router.push(`/agenda/${agenda.id}`)
+    }
   }
 }
 </script>
