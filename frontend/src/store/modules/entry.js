@@ -48,23 +48,23 @@ const actions = {
 }
 
 const plugin = store => {
-    service.on('create', entry => {
-        console.log(entry);
+    console.log('entry listening');
+    service.on('created', entry => {
         if(store.state.entry.entriesOfAgenda[entry.agendaId]==undefined)return;
-        store.commit('addEntry',entry);
+        store.commit('entry/addEntry',{entry});
     });
 
-    service.on('update', entry => {
-        store.commit('editEntry',entry);
+    service.on('updated', entry => {
+        store.commit('entry/editEntry',entry);
     });
 
-    service.on('patch', entry => {
-        store.commit('editEntry',entry);
+    service.on('patched', entry => {
+        store.commit('entry/editEntry',entry);
     });
     
-    service.on('remove', entry => {
-        store.commit('removeEntry',entry.id);
+    service.on('removed', entry => {
+        store.commit('entry/removeEntry',entry.id);
     });
 }
 
-export default {namespaced: true ,state, mutations, actions, plugins:[plugin]}
+export default {namespaced: true ,state, mutations, actions, plugin}
