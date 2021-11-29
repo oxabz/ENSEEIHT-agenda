@@ -5,6 +5,7 @@
         <p>{{agendaEntries}}</p>
         <button v-on:click="create()"></button>
         <MenuButton menu="createEntry"/>
+        <CreateEntryForm/>
     </div>
     <Sidebar/>
 </div>
@@ -12,6 +13,7 @@
 <script>
 import MenuButton from '../components/MenuButton.vue'
 import Sidebar from '../components/Sidebar.vue'
+import CreateEntryForm from '../components/CreateEntryForm.vue';
 export default {
     methods:{
         create(){
@@ -34,9 +36,10 @@ export default {
         }
     },
     components: {
-        MenuButton,
-        Sidebar
-    }
+    MenuButton,
+    Sidebar,
+    CreateEntryForm
+}
 }
 </script>
 <style scoped>

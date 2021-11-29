@@ -30,7 +30,7 @@ const mutations = {
 const actions = {
     createEntry(ignore,entry){
         return service.create(entry).then((result)=>{
-            console.log('Created agenda : ' + result.id);
+            console.log('Created entry : ' + result.id);
             return result;
         });
     },
@@ -49,6 +49,7 @@ const actions = {
 
 const plugin = store => {
     service.on('create', entry => {
+        console.log(entry);
         if(store.state.entry.entriesOfAgenda[entry.agendaId]==undefined)return;
         store.commit('addEntry',entry);
     });
