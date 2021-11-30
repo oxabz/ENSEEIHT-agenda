@@ -46,7 +46,6 @@ export default {
     methods:{
         createEntry(){
             let agendaId = this.$route?.params?.id;
-            console.log(agendaId);
             if (!agendaId || !this.title || !this.startDate || !this.endDate) return;
             this.$store.dispatch('entry/createEntry', {
                 agendaId,

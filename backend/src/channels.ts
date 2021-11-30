@@ -42,7 +42,7 @@ export default function(app: Application): void {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   app.publish((data: any, hook: HookContext) => {
-    console.log(data);
+    console.log(`Publishing ${hook.method} of ${hook.path} on anonymous`);
     return app.channel('anonymous');
   });
 
