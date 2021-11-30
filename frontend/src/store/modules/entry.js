@@ -23,15 +23,15 @@ const state = {
 const mutations = {
     setAgendaOfIntrest(state, {agendaId, interval= [0, Infinity]}){
         if(state.entriesOfAgenda[agendaId]==undefined) {
-            state.entriesOfAgenda = {...{}, [agendaId]:{intrestTimes:[],entries:[]}};
+            state.entriesOfAgenda[agendaId] = {intrestTimes:[],entries:[]};
         }
         state.entriesOfAgenda[agendaId].intrestTimes = time.merge(state.entriesOfAgenda[agendaId].intrestTimes, interval);
         state.indicator++; //vuex black magic to force it to update
     },
     addEntry(state, {agendaId, entry}){
         if(state.entries[entry.id]!=undefined)return;
-        if (state.entriesOfAgenda[agendaId || entry.agendaId]==undefined){
-            state.entriesOfAgenda = {...{}, [agendaId || entry.agendaId]:{intrestTimes:[],entries:[]}};
+        if (state.entriesOfAgenda[agendaId || entry.agendaId] == undefined){
+            state.entriesOfAgenda[agendaId || entry.agendaId] = {intrestTimes:[],entries:[]};
         }
         state.entries[entry.id] = entry;
         state.entriesOfAgenda[agendaId || entry.agendaId].entries.push(entry.id);
