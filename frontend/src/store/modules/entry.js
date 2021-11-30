@@ -1,7 +1,9 @@
 import feathersClient from "../../feathers-client";
 import time from "../../utils/times";
 import {} from "vue"
+
 const service = feathersClient.service('entry');
+
 
 const state = {
     entries:{},
@@ -25,7 +27,6 @@ const mutations = {
         state.entries[entry.id] = entry;
         state.entriesOfAgenda[agendaId || entry.agendaId].entries.push(entry.id);
         state.indicator++; //vuex black magic to force it to update
-        console.log('test');
     },
     editEntry(state, entry){
         if(state.entries[entry.id]==undefined)return state;
@@ -42,7 +43,6 @@ const mutations = {
 const getters = {
     hasInfoOnAgenda: state => ({agendaId, start, end}) => {
         let updateNeeded = false;
-        console.log(state.entriesOfAgenda[agendaId]==undefined);
         if(state.entriesOfAgenda[agendaId]==undefined)return false;
         for (const interval of state.entriesOfAgenda[agendaId].intrestTimes) {
             updateNeeded = updateNeeded || time.included(interval, [start,end]);
@@ -69,7 +69,6 @@ const actions = {
     queryEntriesOfAgenda({commit}, {agendaId, start, end}){
         // Indicated that the agenda was querried on that periode
         commit('setAgendaOfIntrest',{agendaId, start, end});
-
         const  query = {
             agendaId,
             $or:[
@@ -85,13 +84,23 @@ const actions = {
             
         }
         // Making the querry
-        return service.find({
-            query
-        }).then((result)=>{
-            console.log(result);
+        return service.find({$skip:0,query}).then(async (result)=>{
             result.data.forEach((entry)=>{
                 commit('addEntry', {agendaId, entry});
             })
+            //reiterating querry offseted
+            const limit = result.limit;
+            query.$skip = limit;
+            while(query.$skip<result.total) {
+                await service.find({query}).then(async (result)=>{
+                    result.data.forEach((entry)=>{
+                        commit('addEntry', {agendaId, entry});
+                    })
+                }).catch((err)=>{
+                    console.error(err);
+                });
+                query.$skip+=limit;
+            }
         }).catch((err)=>{
             console.error(err);
         })
@@ -99,12 +108,10 @@ const actions = {
 }
 
 const plugin = store => {
-    console.log('entry listening');
+    console.log('Listening For New Entries');
     service.on('created', entry => {
-        console.log("test1");
         if(!store.getters['entry/isOfIntrest']({agendaId:entry.agendaId, date:new Date(entry.startDate).getTime()})
             && !store.getters['entry/isOfIntrest']({agendaId:entry.agendaId, date:new Date(entry.endDate).getTime()})) return;
-        console.log("test2");
         store.commit('entry/addEntry',{entry});
     });
 

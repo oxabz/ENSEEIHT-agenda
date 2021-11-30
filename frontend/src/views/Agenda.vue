@@ -54,11 +54,9 @@ export default {
             let endDate = new Date(this.startTime)
             endDate.setDate(endDate.getDate()+this.rangeDays)
             if (!this.$store.getters['entry/hasInfoOnAgenda']({agendaId:this.$route.params.id, start:this.startTime.getTime(), end:endDate.getTime()})){
-                console.log('Request Querry');
                 this.$store.dispatch('entry/queryEntriesOfAgenda',{agendaId:this.$route.params.id, start:this.startTime, end:endDate});
                 return [];
             }
-            console.log('show entries');
             return module.entriesOfAgenda[this.$route.params.id].entries.map(id => module.entries[id]);
         }
     },

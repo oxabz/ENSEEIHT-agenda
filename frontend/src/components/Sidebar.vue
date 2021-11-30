@@ -7,7 +7,6 @@
 export default {
     computed:{
         classObject(){
-            console.log("toogled"+this.$store.state.sidebar.selectedMenu);
             return {
                 open:this.$store.state.sidebar.selectedMenu != null
             }
