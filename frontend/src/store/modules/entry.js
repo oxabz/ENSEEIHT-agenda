@@ -6,9 +6,18 @@ const service = feathersClient.service('entry');
 
 
 const state = {
-    entries:{},
-    entriesOfAgenda:{},
-    indicator:0
+    entries:{
+      //'uuid':{nom,uuid...}
+      // ...
+    },
+    entriesOfAgenda:{
+      //'uuidAgenda':{
+      //    entries:['uuid'...],
+      //    intrestingIntervals:[[int,int]...]
+      //}
+      // ...
+    },
+    indicator:0//hack que j'ai trouvé
 }
 
 const mutations = {
