@@ -12,8 +12,8 @@ const time = {
             if(this.included(i,interval))return intervals;
         }
         let newIntervals = intervals.filter(i=>this.included(interval,i));
-        let idxIntervalStart = interval.findIndex(i=>this.between(i, interval[0]));
-        let idxIntervalEnd = interval.findIndex(i=>this.between(i, interval[1]));
+        let idxIntervalStart = newIntervals.findIndex(i=>this.between(i, interval[0]));
+        let idxIntervalEnd = newIntervals.findIndex(i=>this.between(i, interval[1]));
         let newInterval = interval;
         if(idxIntervalStart>-1){
             newInterval = [newIntervals[idxIntervalStart][0],newInterval[1]];
@@ -23,11 +23,11 @@ const time = {
         }
         newIntervals = newIntervals.filter((interval,idx)=> idx != idxIntervalStart && idx != idxIntervalEnd);
         let newIdx = 0;
-        while (newIdx < newIntervals.length && newIntervals[idx][0] < newInterval[0]){
+        while (newIdx < newIntervals.length && newIntervals[newIdx][0] < newInterval[0]){
             newIdx++;
         }
         newIntervals.splice(newIdx, 0, newInterval);
-        return newInterval;
+        return newIntervals;
     }
 }
 

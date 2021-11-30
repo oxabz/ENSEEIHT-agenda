@@ -2,7 +2,6 @@
 <div class="flex flex-row w-full">
 
        <div class="flex w-full">
-
         <div>{{ $route.params.id }}</div>
         <p>{{agendaEntries}}</p>
         <p> 
@@ -31,6 +30,14 @@ import MenuButton from '../components/MenuButton.vue'
 import Sidebar from '../components/Sidebar.vue'
 import CreateEntryForm from '../components/CreateEntryForm.vue';
 export default {
+    data(){
+        let startTime = new Date();
+        let rangeDays = 7;
+        return {
+            startTime,
+            rangeDays
+        }
+    },
     methods:{
         create(){
             const agendaId = this.$route.params.id;
@@ -44,11 +51,15 @@ export default {
     computed:{
         agendaEntries(){
             const module = this.$store.state.entry;
-            if (module.entriesOfAgenda[this.$route.params.id] == undefined){
-                this.$store.dispatch('entry/queryEntriesOfAgenda',this.$route.params.id);
+            let endDate = new Date(this.startTime)
+            endDate.setDate(endDate.getDate()+this.rangeDays)
+            if (!this.$store.getters['entry/hasInfoOnAgenda']({agendaId:this.$route.params.id, start:this.startTime.getTime(), end:endDate.getTime()})){
+                console.log('Request Querry');
+                this.$store.dispatch('entry/queryEntriesOfAgenda',{agendaId:this.$route.params.id, start:this.startTime, end:endDate});
                 return [];
             }
-            return module.entriesOfAgenda[this.$route.params.id].map(id => module.entries[id]);
+            console.log('show entries');
+            return module.entriesOfAgenda[this.$route.params.id].entries.map(id => module.entries[id]);
         }
     },
     components: {

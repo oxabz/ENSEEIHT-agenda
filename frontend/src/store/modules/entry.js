@@ -1,29 +1,61 @@
 import feathersClient from "../../feathers-client";
-
+import time from "../../utils/times";
+import {} from "vue"
 const service = feathersClient.service('entry');
 
 const state = {
     entries:{},
-    entriesOfAgenda:{}
+    entriesOfAgenda:{},
+    indicator:0
 }
 
 const mutations = {
+    setAgendaOfIntrest(state, {agendaId, interval= [0, Infinity]}){
+        if(state.entriesOfAgenda[agendaId]==undefined) {
+            state.entriesOfAgenda = {...{}, [agendaId]:{intrestTimes:[],entries:[]}};
+        }
+        state.entriesOfAgenda[agendaId].intrestTimes = time.merge(state.entriesOfAgenda[agendaId].intrestTimes, interval);
+        state.indicator++; //vuex black magic to force it to update
+    },
     addEntry(state, {agendaId, entry}){
         if(state.entries[entry.id]!=undefined)return;
-        if (state.entriesOfAgenda[agendaId || entry.agendaId]==undefined)
-            state.entriesOfAgenda[agendaId || entry.agendaId] = [];
+        if (state.entriesOfAgenda[agendaId || entry.agendaId]==undefined){
+            state.entriesOfAgenda = {...{}, [agendaId || entry.agendaId]:{intrestTimes:[],entries:[]}};
+        }
         state.entries[entry.id] = entry;
-        state.entriesOfAgenda[agendaId || entry.agendaId].push(entry.id);
-        return state;
+        state.entriesOfAgenda[agendaId || entry.agendaId].entries.push(entry.id);
+        state.indicator++; //vuex black magic to force it to update
+        console.log('test');
     },
     editEntry(state, entry){
-        if(state.entries[entry.id]==undefined)return;
+        if(state.entries[entry.id]==undefined)return state;
         state.entries[entry.id] = entry;
+        return state
     },
     remove(state, entryId){
-        if(state.entries[entryId]==undefined)return;
+        if(state.entries[entryId]==undefined)return state;
         delete state.entries[entryId];
         return state;
+    }
+}
+
+const getters = {
+    hasInfoOnAgenda: state => ({agendaId, start, end}) => {
+        let updateNeeded = false;
+        console.log(state.entriesOfAgenda[agendaId]==undefined);
+        if(state.entriesOfAgenda[agendaId]==undefined)return false;
+        for (const interval of state.entriesOfAgenda[agendaId].intrestTimes) {
+            updateNeeded = updateNeeded || time.included(interval, [start,end]);
+        }
+        return updateNeeded;
+    },
+    isOfIntrest: state => ({agendaId, date}) => {
+        let updateNeeded = false;
+        if(!state.entriesOfAgenda[agendaId])return false;
+        for (const interval of state.entriesOfAgenda[agendaId].intrestTimes) {
+            updateNeeded = updateNeeded || time.between(interval, date);
+        }
+        return updateNeeded;
     }
 }
 
@@ -34,10 +66,29 @@ const actions = {
             return result;
         });
     },
-    queryEntriesOfAgenda({commit}, agendaId){
+    queryEntriesOfAgenda({commit}, {agendaId, start, end}){
+        // Indicated that the agenda was querried on that periode
+        commit('setAgendaOfIntrest',{agendaId, start, end});
+
+        const  query = {
+            agendaId,
+            $or:[
+                {startDate: {
+                    $lte : end,
+                    $gte : start
+                }},
+                {endDate: {
+                    $lte : end,
+                    $gte : start
+                }}
+            ]
+            
+        }
+        // Making the querry
         return service.find({
-            query:{agendaId}
+            query
         }).then((result)=>{
+            console.log(result);
             result.data.forEach((entry)=>{
                 commit('addEntry', {agendaId, entry});
             })
@@ -50,7 +101,10 @@ const actions = {
 const plugin = store => {
     console.log('entry listening');
     service.on('created', entry => {
-        if(store.state.entry.entriesOfAgenda[entry.agendaId]==undefined)return;
+        console.log("test1");
+        if(!store.getters['entry/isOfIntrest']({agendaId:entry.agendaId, date:new Date(entry.startDate).getTime()})
+            && !store.getters['entry/isOfIntrest']({agendaId:entry.agendaId, date:new Date(entry.endDate).getTime()})) return;
+        console.log("test2");
         store.commit('entry/addEntry',{entry});
     });
 
@@ -67,4 +121,4 @@ const plugin = store => {
     });
 }
 
-export default {namespaced: true ,state, mutations, actions, plugin}
+export default {namespaced: true ,state, getters, mutations, actions, plugin}
