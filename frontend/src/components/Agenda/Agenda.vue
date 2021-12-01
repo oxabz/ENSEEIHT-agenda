@@ -1,6 +1,6 @@
 <template>
 <div class="w-full agenda h-screen flex flex-col" :style="cssVars">
-    <table class="table agenda-head">
+    <table class="table agenda-head border-b-2 filter shadow-lg">
         <tr>
             <th class="p-0 text-sm opacity-50" v-for="[month, size] in Object.entries(months)" v-bind:key="month" :colspan="size">
                 {{month}}
@@ -8,7 +8,8 @@
         </tr>
         <tr>
             <th v-for="j in dates" v-bind:key="j">
-                {{j.dayName}}
+                <p class="opacity-50 text-xs">{{j.dayName}}</p>
+                <p class="text-center">{{j.dayNum}}</p>
             </th>
         </tr>
     </table>
@@ -29,7 +30,7 @@
 import Entry from "./Entry.vue";
 import times from "@/utils/times"
 import colors from "../../utils/colors";
-const DAYS_OF_THE_WEEK = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+const DAYS_OF_THE_WEEK = [ 'Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi' ];
 const MONTHS = ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'];
 
 export default {
@@ -82,7 +83,6 @@ export default {
             };
         },
         entriesProps(){
-            console.log(this.entries);
             let entries = [...this.entries];
             entries.sort((a,b)=> a.startDate.getTime()-b.startDate.getTime());
             return this.dates.map((c,columnIdx)=>{
@@ -97,7 +97,6 @@ export default {
                     times.between([column.getTime(),columnEnd.getTime()], entry.startDate.getTime())||
                     times.between([column.getTime(),columnEnd.getTime()], entry.endDate.getTime()))
                     .map(entry => {
-                        console.log(entry);
                         const color = colors.stringToColors(entry.title) 
                         return{
                             ...entry,

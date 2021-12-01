@@ -81,8 +81,8 @@ export default {
         },
         computedClass(){
             return{
-                'rounded-t-md': this.startInColumn,
-                'rounded-b-md': this.endInColumn
+                'rounded-t-xl': this.startInColumn,
+                'rounded-b-xl': this.endInColumn
             }
         },
     }

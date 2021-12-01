@@ -1,8 +1,8 @@
 <template>
 <div class="flex flex-row w-screen">
-    <div class="w-full">
+    <div class="w-full relative">
         <Agenda :start="startTime" :interval="rangeDays" :entries="agendaEntries"/>
-        <MenuButton class="fixed top-0 right-0" menu="createEntry"/>
+        <MenuButton class="absolute right-4 bottom-4 btn-circle" menu="createEntry"><i class="fas fa-plus text-xl"></i></MenuButton>
     </div>
     <Sidebar/>
 </div>
@@ -39,7 +39,6 @@ export default {
                 this.$store.dispatch('entry/queryEntriesOfAgenda',{agendaId:this.$route.params.id, start:this.startTime, end:endDate});
                 return [];
             }
-            console.log(module.entriesOfAgenda[this.$route.params.id].entries.map(id => module.entries[id]));
             return module.entriesOfAgenda[this.$route.params.id].entries.map(id => module.entries[id]);
         }
     },
@@ -50,6 +49,3 @@ export default {
 }
 }
 </script>
-<style scoped>
-
-</style>

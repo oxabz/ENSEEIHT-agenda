@@ -60,6 +60,6 @@ export default {
 </script>
 <style scoped>
 .create-entry-form{
-    width: 18rem;
+    width: 100%;
 }
 </style>
