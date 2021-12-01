@@ -1,5 +1,5 @@
 <template>
-    <div class="entry absolute h-24" :class="computedClass" :style="cssVars">
+    <div class="entry absolute" :class="computedClass" :style="cssVars">
         {{title}}
     </div>
 </template>
@@ -62,14 +62,20 @@ export default {
             let {r,g,b} = colors.hexToRgb(this.color);
             return (r+g+b>384 ? '#000000': '#ffffff')
         },
+        borderColor(){
+            let {r,g,b} = colors.hexToRgb(this.contrastingColor);
+            let {r:rb,g:gb,b:bb} = colors.hexToRgb(this.color);
+            return colors.rgbToHex(Math.round(r*0.5+rb*0.5),Math.round(g*0.5+gb*0.5),Math.round(b*0.5+bb*0.5));
+        },
         cssVars(){
             return{
                 '--entry-duration': Math.min((this.endDate.getTime()-this.startDate.getTime())/1000/60/60, 24),
                 '--entry-level': this.level,
                 '--entry-start': Math.max(0, (this.startDate.getTime()-this.column.getTime())/1000/60/60),
                 '--column-index': this.columnIdx,
-                'background-color': this.color,
-                'color': this.contrastingColor
+                '--entry-background-color': this.color,
+                '--entry-color': this.contrastingColor,
+                '--entry-border-color': this.borderColor
             }
         },
         computedClass(){
@@ -90,6 +96,10 @@ export default {
         height: calc(100% / 24 * var(--entry-duration) + 0.25em * var(--entry-level));
         top: calc(100% / 24 * var(--entry-start));
         left: calc(100% / var(--agenda-interval) * var(--column-index));
+        color: var(--entry-color);
+        background-color: var(--entry-background-color);
+        border: 2px solid;
+        border-color: var(--entry-border-color);
     }
     div.entry:hover{
         z-index: 999;

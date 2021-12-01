@@ -27,6 +27,7 @@
 <script>
 import Entry from "./Entry.vue";
 import times from "@/utils/times"
+import colors from "../../utils/colors";
 const DAYS_OF_THE_WEEK = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 const MONTHS = ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'];
 
@@ -88,7 +89,7 @@ export default {
                     times.between([column.getTime(),columnEnd.getTime()], entry.startDate.getTime())||
                     times.between([column.getTime(),columnEnd.getTime()], entry.endDate.getTime()))
                     .map(entry => {
-                        const color = "#" + ((1<<24)*Math.random() | 0).toString(16); // Picking a random color 
+                        const color = colors.stringToColors(entry.title) 
                         return{
                             ...entry,
                             color,
