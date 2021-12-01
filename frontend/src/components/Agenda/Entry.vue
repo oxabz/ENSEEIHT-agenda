@@ -68,10 +68,11 @@ export default {
             return colors.rgbToHex(Math.round(r*0.5+rb*0.5),Math.round(g*0.5+gb*0.5),Math.round(b*0.5+bb*0.5));
         },
         cssVars(){
+            let diff = Math.max((this.startDate.getTime()-this.column.getTime())/1000/60/60, 0);
             return{
-                '--entry-duration': Math.min((this.endDate.getTime()-this.startDate.getTime())/1000/60/60, 24),
+                '--entry-duration': Math.min((this.endDate.getTime()-Math.max(this.startDate.getTime(), this.column))/1000/60/60, 24-diff),
                 '--entry-level': this.level,
-                '--entry-start': Math.max(0, (this.startDate.getTime()-this.column.getTime())/1000/60/60),
+                '--entry-start': diff,
                 '--column-index': this.columnIdx,
                 '--entry-background-color': this.color,
                 '--entry-color': this.contrastingColor,

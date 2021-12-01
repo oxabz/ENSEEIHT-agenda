@@ -15,9 +15,10 @@
     <div class="w-full h-full overflow-y-auto agenda-body">
         <table class="table w-full relative">
             <Entry/>
+            <Entry v-for="entry in entriesProps" v-bind:key="entry" :title="entry.title" :column="entry.column" :columnIdx="entry.columnIdx" :startDate="entry.startDate" :endDate="entry.endDate" :color="entry.color"/>
             <tbody class="">
                 <tr v-for="i in timeArray" v-bind:key="i">
-                    <td  v-for="j in 7" v-bind:key="j" class="opacity-50 text-xs h-24">{{i}}</td>
+                    <td  v-for="j in 7" v-bind:key="j" class="opacity-50 text-xs h-12">{{i}}</td>
                 </tr>
             </tbody>
         </table>
@@ -53,7 +54,12 @@ export default {
             return [...Array(this.interval).keys()].map(x => {
                 let t = new Date(this.start);
                 t.setDate(start + x);
+                t.setHours(0);
+                t.setMinutes(0);
+                t.setSeconds(0);
+                t.setMilliseconds(0);
                 return {
+                    time:t,
                     dayName: DAYS_OF_THE_WEEK[t.getDay()],
                     month: MONTHS[t.getMonth()],
                     dayNum: t.getDate()
@@ -76,9 +82,11 @@ export default {
             };
         },
         entriesProps(){
+            console.log(this.entries);
             let entries = [...this.entries];
             entries.sort((a,b)=> a.startDate.getTime()-b.startDate.getTime());
-            return this.dates.map((column,columnIdx)=>{
+            return this.dates.map((c,columnIdx)=>{
+                let column = c.time;
                 let columnEnd = new Date(column);
                 columnEnd.setHours(23);
                 columnEnd.setMinutes(59);
@@ -89,6 +97,7 @@ export default {
                     times.between([column.getTime(),columnEnd.getTime()], entry.startDate.getTime())||
                     times.between([column.getTime(),columnEnd.getTime()], entry.endDate.getTime()))
                     .map(entry => {
+                        console.log(entry);
                         const color = colors.stringToColors(entry.title) 
                         return{
                             ...entry,
@@ -97,7 +106,7 @@ export default {
                             columnIdx
                         }
                     })
-            });
+            }).flat();
         }
     },
     components: { Entry }

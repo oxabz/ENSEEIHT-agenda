@@ -1,5 +1,5 @@
 <template>
-    <div><button  v-on:click="toggleMenu()"> {{menu}} </button></div>
+    <div><button class="btn" v-on:click="toggleMenu()"> {{menu}} </button></div>
 </template>
 <script>
 export default {

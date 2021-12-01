@@ -1,28 +1,43 @@
 <template>
-<div class="sidebar h-full  " v-bind:class="classObject">
-  <div class="fixed h-screen w-1/5"> tetxtzgsdghd vdhsd </div>
+<div class="sidebar h-full" v-bind:class="classObject">
+    <div class="h-screen"> 
+        <CreateEntryForm/>
+    </div>
 </div>
 </template>
 <script>
+import CreateEntryForm from '@/components/CreateEntryForm.vue'
 export default {
     computed:{
         classObject(){
             return {
-                open:this.$store.state.sidebar.selectedMenu != null
+                'open':this.$store.state.sidebar.selectedMenu != null
             }
         }
+    },
+    components:{
+        CreateEntryForm
     }
 }
 </script>
 <style scoped>
 .sidebar{
+    position: relative;
+    border-color: grey;
     width: 0;
-    background-color: tomato;
-    height: 100vh;
     transition-property: width;
     transition-duration: 2s;
+    overflow: hidden;
 }
+
+.sidebar>div{
+    top: 0;
+    left: 0;
+    width: 24rem;
+    height: 100vh;
+}
+
 .open{
-    width: 20%;
+    width: 24rem;
 }
 </style>
