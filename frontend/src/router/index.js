@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Agenda from '../views/Agenda.vue'
 import CreateEntryForm from '../components/CreateEntryForm.vue'
+import Column from '../components/Agenda/Agenda.vue'
 
 const routes = [
   {
@@ -24,7 +25,12 @@ const routes = [
   {
     path: '/view/createEntry',
     component: CreateEntryForm
+  },
+  {
+    path: '/view/column',
+    component: Column
   }
+  
 
 ]
 
