@@ -28,7 +28,12 @@ const mutations = {
         state.entriesOfAgenda[agendaId].intrestTimes = time.merge(state.entriesOfAgenda[agendaId].intrestTimes, interval);
         state.indicator++; //vuex black magic to force it to update
     },
-    addEntry(state, {agendaId, entry}){
+    addEntry(state, {agendaId, param}){
+        let entry = {
+            ...param,
+            startDate : new Date(param.startDate),
+            endDate : new Date(param.endDate),
+        };
         if(state.entries[entry.id]!=undefined)return;
         if (state.entriesOfAgenda[agendaId || entry.agendaId] == undefined){
             state.entriesOfAgenda[agendaId || entry.agendaId] = {intrestTimes:[],entries:[]};
@@ -37,7 +42,12 @@ const mutations = {
         state.entriesOfAgenda[agendaId || entry.agendaId].entries.push(entry.id);
         state.indicator++; //vuex black magic to force it to update
     },
-    editEntry(state, entry){
+    editEntry(state, param){
+        let entry = {
+            ...param,
+            startDate : new Date(entry.startDate),
+            endDate : new Date(entry.endDate),
+        };
         if(state.entries[entry.id]==undefined)return state;
         state.entries[entry.id] = entry;
         return state
@@ -95,7 +105,7 @@ const actions = {
         // Making the querry
         return service.find({$skip:0,query}).then(async (result)=>{
             result.data.forEach((entry)=>{
-                commit('addEntry', {agendaId, entry});
+                commit('addEntry', {agendaId, param:entry});
             })
             //reiterating querry offseted
             const limit = result.limit;
@@ -103,7 +113,7 @@ const actions = {
             while(query.$skip<result.total) {
                 await service.find({query}).then(async (result)=>{
                     result.data.forEach((entry)=>{
-                        commit('addEntry', {agendaId, entry});
+                        commit('addEntry', {agendaId, param:entry});
                     })
                 }).catch((err)=>{
                     console.error(err);
@@ -121,7 +131,7 @@ const plugin = store => {
     service.on('created', entry => {
         if(!store.getters['entry/isOfIntrest']({agendaId:entry.agendaId, date:new Date(entry.startDate).getTime()})
             && !store.getters['entry/isOfIntrest']({agendaId:entry.agendaId, date:new Date(entry.endDate).getTime()})) return;
-        store.commit('entry/addEntry',{entry});
+        store.commit('entry/addEntry',{param:entry});
     });
 
     service.on('updated', entry => {

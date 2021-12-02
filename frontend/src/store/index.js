@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 import agendaModule from './modules/agenda'
 import entryModule from './modules/entry'
 import sidebarModule from './modules/sidebar'
-
+import loginModule from './modules/login'
 
 
 export default createStore({
@@ -15,7 +15,8 @@ export default createStore({
     modules: {
         agenda:agendaModule,
         entry:entryModule,
-        sidebar:sidebarModule
+        sidebar:sidebarModule,
+        login:loginModule
     },
     plugins:[
         entryModule.plugin,
