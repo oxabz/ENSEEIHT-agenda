@@ -35,33 +35,34 @@ const mutations = {
 const plugin = store => {
     
     let recentagendaid = localStorage.getItem('recentAgenda');
-    store.commit("agenda/setRecentAgendas",recentagendaid);
-    recentagendaid.array.forEach(element => {
-        console.log(element);
-        service.get(element).then((result)=>{
-        
+    if(recentagendaid == 'undefined' || recentagendaid == null){
+        recentagendaid=[]
+    }
+    else {
+        recentagendaid = JSON.parse(recentagendaid)
+    }
+    Promise.all(recentagendaid.map(element => {
+        return service.get(element).then((result)=>{
             store.commit("agenda/addAgenda", result);
-                
-            
         }).catch((err)=>{
             console.error(err);
         })
-        
+    })).then(()=>{
+        store.commit("agenda/setRecentAgendas",recentagendaid);
     });
-    
-    
 }
 
 const actions = {
     createAgenda(store, agenda) {
         return service.create(agenda).then((result) => {
             console.log('Created agenda : ' + result.id);
-            store.commit("agenda/addRecentAgenda", result.id);
-            store.commit("agenda/addAgenda", result);
-            localStorage.setItem('recentAgenda', agenda.recentagenda);
+            store.commit("addRecentAgenda", result.id);
+            store.commit("addAgenda", result);
+            console.log(JSON.stringify(store.state.recentagenda));
+            localStorage.setItem('recentAgenda', JSON.stringify(store.state.recentagenda));
             return result;
         });
     }
 }
 
-export default {namespaced: true, state, mutations, actions, plugins:[plugin] }
+export default {namespaced: true, state, mutations, actions, plugin }

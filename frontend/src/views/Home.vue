@@ -9,7 +9,7 @@
           Utilisez cette agenda révolutionaire dés aujourd'hui!  
         </p> 
         <NewAgenda title="Créez votre premier calendrier" label="Go !" :onCreate="handleCreate"/>
-        <RecentAgenda/>
+        <RecentAgenda class="my-8"/>
       </div>
     </div>
   </div>

@@ -18,6 +18,7 @@ export default createStore({
         sidebar:sidebarModule
     },
     plugins:[
-        entryModule.plugin
+        entryModule.plugin,
+        agendaModule.plugin
     ]
 })
