@@ -17,6 +17,7 @@ import services from './services';
 import appHooks from './app.hooks';
 import channels from './channels';
 import knex from './knex';
+import authentication from './authentication';
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const app: Application = express(feathers());
@@ -51,6 +52,7 @@ export default new Promise<Application>(async (resolve, ) => {
   // Set up event channels (see channels.ts)
   app.configure(channels);
 
+  app.configure(authentication);
   // Configure a middleware for 404s and the error handler
   app.use(express.notFound());
   app.use(express.errorHandler({logger} as any));
