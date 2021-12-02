@@ -1,5 +1,5 @@
 <template>
-    <div><button type="button" v-on:click="toggleMenu()"> {{menu}} </button></div>
+    <div><button  v-on:click="toggleMenu()"> {{menu}} </button></div>
 </template>
 <script>
 export default {
@@ -13,6 +13,7 @@ export default {
                this.$store.commit("sidebar/close");
             }
         }
+    
     }
 }
 </script>
