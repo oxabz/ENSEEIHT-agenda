@@ -1,14 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Agenda from '../views/Agenda.vue'
-import CreateEntryForm from '../components/CreateEntryForm.vue'
-import Column from '../components/Agenda/Agenda.vue'
+import Authentification from '../views/Authentification.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/auth',
+    name: 'Authentification',
+    component: Authentification
   },
   {
     path: '/about',
@@ -21,17 +25,7 @@ const routes = [
   {
     path: '/agenda/:id',
     component: Agenda
-  },
-  {
-    path: '/view/createEntry',
-    component: CreateEntryForm
-  },
-  {
-    path: '/view/column',
-    component: Column
   }
-  
-
 ]
 
 const router = createRouter({
