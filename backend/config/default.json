@@ -30,11 +30,10 @@
     "oauth": {
       "redirect": "http://localhost:8080/auth",
       "google": {
-        "key": "<google oauth key>",
-        "secret": "<google oauth secret>",
+        "key": "580662550539-7eamrr6vucjjhpnn861u6hk6ctg5a9f2.apps.googleusercontent.com",
+        "secret": "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",
         "scope": [
           "email",
-          "profile",
           "openid"
         ]
       },

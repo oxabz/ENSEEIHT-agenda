@@ -17,6 +17,7 @@ export default function(app: Application): void {
   authentication.register('jwt', new JWTStrategy());
   authentication.register('local', new LocalStrategy());
   authentication.register('github', new OAuthStrategy());
+  authentication.register('google', new OAuthStrategy());
 
   app.use('/authentication', authentication);
   app.configure(expressOauth());
