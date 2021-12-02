@@ -28,7 +28,7 @@
       "passwordField": "password"
     },
     "oauth": {
-      "redirect": "/",
+      "redirect": "http://localhost:8080/auth",
       "google": {
         "key": "<google oauth key>",
         "secret": "<google oauth secret>",
@@ -39,8 +39,8 @@
         ]
       },
       "github": {
-        "key": "<github oauth key>",
-        "secret": "<github oauth secret>"
+        "key": "db0de5e9f7780c97208d",
+        "secret": "ee3cf4fa83f9440173ed66a2700b8e72d33ee996"
       }
     }
   },

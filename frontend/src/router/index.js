@@ -1,12 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Agenda from '../views/Agenda.vue'
+import Authentification from '../views/Authentification.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/auth',
+    name: 'Authentification',
+    component: Authentification
   },
   {
     path: '/about',
