@@ -1,5 +1,5 @@
 <template>
-    <div><button  v-on:click="toggleMenu()"> {{menu}} </button></div>
+    <button class="menu-btn btn" v-on:click="toggleMenu()"> <slot></slot> </button>
 </template>
 <script>
 export default {
@@ -17,3 +17,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+.menu-btn{
+    z-index: 9999999;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="h-full max-w-sm p-5 form-control relative">
+    <div class="create-entry-form h-full p-5 form-control relative">
         <h2>Create Event</h2>
         <span class="divider opacity-30"></span>
         <div class="form-control">
@@ -58,3 +58,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+.create-entry-form{
+    width: 100%;
+}
+</style>
