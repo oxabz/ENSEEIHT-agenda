@@ -26,7 +26,6 @@ const routes = [
     path: '/agenda/:id',
     component: Agenda
   }
-
 ]
 
 const router = createRouter({
