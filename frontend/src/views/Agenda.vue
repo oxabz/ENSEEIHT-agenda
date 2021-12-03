@@ -72,8 +72,8 @@ export default {
                 'sm': 5,
                 'md': 7,
                 'lg': 7,
-                'xl': 10,
-                '2xl': 14,
+                'xl': 7,
+                '2xl': 7,
             }[this.breakpoint];
         }
     },
