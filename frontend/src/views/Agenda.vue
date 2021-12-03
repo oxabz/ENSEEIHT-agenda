@@ -62,13 +62,11 @@ export default {
         },
         breakpoint(){
             for (const [breakpoint, px] of Object.entries(BREAKPOINTS)) {
-                console.log(this.windowWidth, breakpoint, px)
                 if(px > this.windowWidth)return breakpoint;
             }
             return 'xs'
         },
         interval(){
-            console.log(this.breakpoint)
             return {
                 'xs': 3,
                 'sm': 5,
