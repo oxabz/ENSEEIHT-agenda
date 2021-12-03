@@ -19,15 +19,12 @@
 // @ is an alias to /src
 import NewAgenda from '../components/NewAgenda.vue'
 import RecentAgenda from '../components/RecentAgenda.vue'
-import Login from '../components/Login.vue'
 
 export default {
   name: 'Home',
   components: {
     NewAgenda,
-    RecentAgenda,
-    Login,
-    NewAgenda
+    RecentAgenda
   },
   methods:{
     handleCreate(agenda){
