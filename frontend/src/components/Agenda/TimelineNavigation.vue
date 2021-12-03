@@ -49,21 +49,26 @@ export default {
             let d = new Date(this.initialDate);
             d.setDate(d.getDate()-1);
             this.changeDate(d);
+            this.dateInput = d.toLocaleDateString('en-CA');
         },
         forwardOneDay(){
             let d = new Date(this.initialDate);
             d.setDate(d.getDate()+1);
             this.changeDate(d);
+            this.dateInput = d.toLocaleDateString('en-CA');
         },
         backOneInterval(){
             let d = new Date(this.initialDate);
             d.setDate(d.getDate()-this.interval);
             this.changeDate(d);
+            this.dateInput = d.toLocaleDateString('en-CA');
         },
         forwardOneInterval(){
             let d = new Date(this.initialDate);
             d.setDate(d.getDate()+this.interval);
             this.changeDate(d);
+            this.dateInput = d.toLocaleDateString('en-CA');
+
         },
     }, 
     computed:{

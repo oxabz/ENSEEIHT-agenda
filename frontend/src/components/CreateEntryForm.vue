@@ -1,12 +1,12 @@
 <template>
     <div class="create-entry-form h-full p-5 form-control relative">
-        <h2>Create Event</h2>
+        <h2 class="text-lg font-bold">Creer un evenement : </h2>
         <span class="divider opacity-30"></span>
         <div class="form-control">
             <label class="label" for="title">
-                <span class="label-text text-xs opacity-70">Title</span>
+                <span class="label-text text-xs opacity-70">Titre</span>
             </label>
-            <input class="w-full pr-16 input input-primary input-bordered" v-model="title" v-on:keyup.enter="submit" type="text" placeholder="Title" name="title"/> 
+            <input class="w-full pr-16 input input-primary input-bordered" v-model="title" v-on:keyup.enter="submit" type="text" placeholder="Titre" name="title"/> 
         </div>
         <div class="form-control">
             <label class="label" for="description">
@@ -17,18 +17,18 @@
 
         <div class="form-control">
             <label class="label" for="start">
-                <span class="label-text text-xs opacity-70">Start</span>
+                <span class="label-text text-xs opacity-70">Debut</span>
             </label>
-            <input type="datetime-local" class="input input-bordered" v-model="startDate" placeholder="Start" name="start">
+            <input type="datetime-local" class="input input-bordered" v-model="startDate" placeholder="Debut" name="start">
         </div>
         <div class="form-control">
             <label class="label" for="end">
-                <span class="label-text text-xs opacity-70">End</span>
+                <span class="label-text text-xs opacity-70">Fin</span>
             </label>
-            <input type="datetime-local" class="input input-bordered" v-model="endDate" placeholder="Start" name="end">
+            <input type="datetime-local" class="input input-bordered" v-model="endDate" placeholder="Fin" name="end">
         </div>
         <div class="flex justify-end h-full items-end">
-            <button class="btn btn-primary" v-on:click="createEntry">Create !</button>
+            <button class="btn btn-primary" v-on:click="createEntry">Créer !</button>
         </div>
         
     </div>

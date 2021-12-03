@@ -10,7 +10,6 @@
         </p> 
         <NewAgenda title="Créez votre premier calendrier" label="Go !" :onCreate="handleCreate"/>
         <RecentAgenda class="my-8"/>
-        <Login/>
       </div>
     </div>
   </div>

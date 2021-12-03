@@ -1,15 +1,11 @@
 <template>
     <div>
-       
-            <h2 class="font-black space-y-5 mx-4"  > Agenda récent </h2>
-             <ul>
+        <h2 class="text-left font-black space-y-5 mx-4"  > Agenda récent : </h2>
+        <ul>
             <li v-for="recent in recentAgendas" :key="recent"> 
                 <button class=" btn btn-ghost w-full" v-on:click="submit">{{ recent.name }}</button>
             </li>
-                
-            
         </ul>
-       
     </div>
 </template>
 
