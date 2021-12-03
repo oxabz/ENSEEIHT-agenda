@@ -19,6 +19,7 @@ export default createStore({
         login:loginModule
     },
     plugins:[
-        entryModule.plugin
+        entryModule.plugin,
+        agendaModule.plugin
     ]
 })
