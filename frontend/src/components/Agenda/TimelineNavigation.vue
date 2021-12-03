@@ -3,7 +3,7 @@
     <div class=" flex items-center ">
         <input class="input input-ghost input-xs w-36" v-model="dateInput" type="date" @change="handleChange"/>
         <i class="fas fa-arrow-right"></i>
-        <p class="ml-4 text-xs">11/11/2000</p>
+        <p class="ml-4 text-xs">{{getEndDate}}</p>
     </div>
     <div class="flex items-center ">
         <button class="btn btn-xs btn-ghost" @click="backOneInterval"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i></button>
@@ -65,6 +65,13 @@ export default {
             d.setDate(d.getDate()+this.interval);
             this.changeDate(d);
         },
+    }, 
+    computed:{
+        getEndDate(){
+            const d = new Date(this.dateInput);
+            d.setDate(d.getDate()+this.interval-1);
+            return d.toLocaleDateString();
+        }
     }
 }
 </script>
