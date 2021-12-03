@@ -13,13 +13,22 @@ import MenuButton from '../components/MenuButton.vue'
 import Sidebar from '../components/Sidebar.vue'
 import Agenda from '../components/Agenda/Agenda.vue';
 import TimelineNavigation from '../components/Agenda/TimelineNavigation.vue';
+
+const BREAKPOINTS = {
+    'xs': 420,
+    'sm': 640,
+    'md': 768,
+    'lg': 1024,
+    'xl': 1280,
+    '2xl': 1536,
+}
+
 export default {
     data(){
         let startDate = new Date();
-        let interval = 7;
         return {
+            windowWidth: window.innerWidth,
             startDate,
-            interval
         }
     },
     methods:{
@@ -30,6 +39,9 @@ export default {
                 titre:'test',
                 description:'test'
             })
+        },
+        onResize() {
+            this.windowWidth = window.innerWidth;
         }
     },
     computed:{
@@ -47,7 +59,33 @@ export default {
             return (date)=>{
                 this.startDate = date;
             }
+        },
+        breakpoint(){
+            for (const [breakpoint, px] of Object.entries(BREAKPOINTS)) {
+                console.log(this.windowWidth, breakpoint, px)
+                if(px > this.windowWidth)return breakpoint;
+            }
+            return 'xs'
+        },
+        interval(){
+            console.log(this.breakpoint)
+            return {
+                'xs': 3,
+                'sm': 5,
+                'md': 7,
+                'lg': 7,
+                'xl': 10,
+                '2xl': 14,
+            }[this.breakpoint];
         }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            window.addEventListener('resize', this.onResize);
+        })
+    },
+    beforeDestroy() { 
+        window.removeEventListener('resize', this.onResize); 
     },
     components: {
     MenuButton,
