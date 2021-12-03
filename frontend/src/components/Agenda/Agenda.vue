@@ -1,5 +1,5 @@
 <template>
-<div class="w-full agenda h-screen flex flex-col" :style="cssVars">
+<div class="w-full agenda h-full flex flex-col" :style="cssVars">
     <table class="table agenda-head border-b-2 filter shadow-lg">
         <tr>
             <th class="p-0 text-sm opacity-50" v-for="[month, size] in Object.entries(months)" v-bind:key="month" :colspan="size">
@@ -15,7 +15,6 @@
     </table>
     <div class="w-full h-full overflow-y-auto agenda-body">
         <table class="table w-full relative">
-            <Entry/>
             <Entry v-for="entry in entriesProps" v-bind:key="entry" :title="entry.title" :column="entry.column" :columnIdx="entry.columnIdx" :startDate="entry.startDate" :endDate="entry.endDate" :color="entry.color"/>
             <tbody class="">
                 <tr v-for="i in timeArray" v-bind:key="i">
@@ -112,6 +111,11 @@ export default {
 }
 </script>
 <style scoped>
+
+div.agenda{
+    flex: 1;
+    min-height: 0;
+}
 
 div.agenda td,th{
     padding: 0.4em !important;
