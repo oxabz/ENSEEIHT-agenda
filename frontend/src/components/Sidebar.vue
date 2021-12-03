@@ -3,7 +3,7 @@
     <div class="sidebar-placeholder relative h-full ">
         
     </div>
-    <div class="sidebar-container h-screen border-l-2 fixed right-0 top-0"> 
+    <div class="sidebar-container h-screen  border-l-2 fixed right-0 top-0"> 
         <CreateEntryForm/>
     </div>
 </div>
@@ -26,8 +26,16 @@ export default {
 <style scoped>
 
 .sidebar{
-    --sidebar-width: 24rem
+    --sidebar-width: 24rem;
+    z-index: 999999999999999;
 }
+
+@media (max-width: 640px) {
+    .sidebar{
+        --sidebar-width: 100%
+    }
+}
+
 div.sidebar-placeholder{
     position: relative;
     width: 0;
@@ -38,6 +46,13 @@ div.sidebar-placeholder{
 .open div.sidebar-placeholder{
     width: var(--sidebar-width);
 }
+
+@media (max-width: 768px) {
+    .open div.sidebar-placeholder{
+        width: 0;
+    }
+}
+
 div.sidebar-container{
     background-color: white;
     right: calc(var(--sidebar-width) * -1);
@@ -45,6 +60,7 @@ div.sidebar-container{
     transition: .75s right ease-in-out;
     overflow: hidden;
 }
+
 
 .open div.sidebar-container{
     right: 0;

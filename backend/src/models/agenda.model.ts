@@ -12,7 +12,7 @@ export default function (app: Application):Knex {
     if(!exists) {
       db.schema.createTable(tableName, table => {
         table.uuid('id').primary().defaultTo(db.raw('(uuid_generate_v4())'));
-        table.string('name')
+        table.string('name');
       })
         .then(() => console.log(`Created ${tableName} table`))
         .catch(e => console.error(`Error creating ${tableName} table`, e));

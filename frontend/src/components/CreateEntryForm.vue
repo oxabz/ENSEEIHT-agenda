@@ -1,6 +1,9 @@
 <template>
     <div class="create-entry-form h-full p-5 form-control relative">
-        <h2 class="text-lg font-bold">Creer un evenement : </h2>
+        <div class="flex justify-between">
+            <h2 class="text-lg font-bold">Creer un evenement : </h2>
+            <button class="btn btn-ghost btn-sm" @click="closeSidebar"><i class="fas fa-times"></i></button>
+        </div>
         <span class="divider opacity-30"></span>
         <div class="form-control">
             <label class="label" for="title">
@@ -54,6 +57,9 @@ export default {
                 startDate:this.startDate,
                 endDate:this.endDate
             })  
+        },
+        closeSidebar(){
+            this.$store.commit('sidebar/close')
         }
     }
 }
