@@ -15,7 +15,7 @@ export default {
     all: [],
     find: [
       (ctx:HookContext)=>{
-        ctx.result.data = ctx.result.data.map((agenda:any)=>!agenda.userId ||agenda.userId==ctx.params.authentication?.payload.sid);
+        ctx.result.data = ctx.result.data.filter((agenda:any)=>!agenda.userId ||agenda.userId==ctx.params.authentication?.payload.sid);
       }
     ],
     get: [],
