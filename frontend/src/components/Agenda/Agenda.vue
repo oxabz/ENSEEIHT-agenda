@@ -15,7 +15,7 @@
     </table>
     <div class="w-full h-full overflow-y-auto agenda-body">
         <table class="table w-full relative">
-            <Entry v-for="entry in entriesProps" v-bind:key="entry" :title="entry.title" :column="entry.column" :columnIdx="entry.columnIdx" :startDate="entry.startDate" :endDate="entry.endDate" :color="entry.color"/>
+            <Entry v-for="entry in entriesProps" v-bind:key="entry" :title="entry.title" :column="entry.column" :columnIdx="entry.columnIdx" :startDate="entry.startDate" :endDate="entry.endDate" :color="entry.color" :level="entry.level"/>
             <tbody class="">
                 <tr v-for="time in timeArray" v-bind:key="time">
                     <td  v-for="(ignored, i) in dates" v-bind:key="i" class="opacity-50 text-xs h-12">{{time}}</td>
@@ -83,7 +83,9 @@ export default {
         },
         entriesProps(){
             let entries = [...this.entries];
+            console.log(levels);
             entries.sort((a,b)=> a.startDate.getTime()-b.startDate.getTime());
+            let levels = times.getSuperpositions(entries.map(entry => [entry.startDate.getTime(), entry.endDate.getTime()]));
             return this.dates.map((c,columnIdx)=>{
                 let column = c.time;
                 let columnEnd = new Date(column);
@@ -91,17 +93,18 @@ export default {
                 columnEnd.setMinutes(59);
                 columnEnd.setSeconds(59);
                 columnEnd.setMilliseconds(999);
-                return entries.filter(entry => times.included([column.getTime(),columnEnd.getTime()], [entry.startDate.getTime(),entry.endDate.getTime()])||
+                return entries.filter((entry) => times.included([column.getTime(),columnEnd.getTime()], [entry.startDate.getTime(),entry.endDate.getTime()])||
                     times.included([entry.startDate.getTime(),entry.endDate.getTime()], [column.getTime(),columnEnd.getTime()])||
                     times.between([column.getTime(),columnEnd.getTime()], entry.startDate.getTime())||
                     times.between([column.getTime(),columnEnd.getTime()], entry.endDate.getTime()))
-                    .map(entry => {
+                    .map((entry, entryIdx) => {
                         const color = colors.stringToColors(entry.title) 
                         return{
                             ...entry,
                             color,
                             column,
-                            columnIdx
+                            columnIdx,
+                            level: levels[entryIdx]
                         }
                     })
             }).flat();
