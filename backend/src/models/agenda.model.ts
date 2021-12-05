@@ -13,6 +13,8 @@ export default function (app: Application):Knex {
       db.schema.createTable(tableName, table => {
         table.uuid('id').primary().defaultTo(db.raw('(uuid_generate_v4())'));
         table.string('name');
+        table.uuid('userId');
+        table.foreign('userId').references('users.id').onDelete('CASCADE');
       })
         .then(() => console.log(`Created ${tableName} table`))
         .catch(e => console.error(`Error creating ${tableName} table`, e));

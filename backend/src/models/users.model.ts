@@ -11,16 +11,13 @@ export default function (app: Application): Knex {
   db.schema.hasTable(tableName).then(exists => {
     if(!exists) {
       db.schema.createTable(tableName, table => {
-        table.increments('id');
+        table.uuid('id').primary().defaultTo(db.raw('(uuid_generate_v4())'));
       
         table.string('email').unique();
         table.string('password');
       
-      
         table.string('googleId');
-      
         table.string('githubId');
-      
       })
         .then(() => console.log(`Created ${tableName} table`))
         .catch(e => console.error(`Error creating ${tableName} table`, e));

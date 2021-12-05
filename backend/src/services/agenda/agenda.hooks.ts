@@ -1,3 +1,4 @@
+import { HookContext } from '../../app';
 
 export default {
   before: {
@@ -12,7 +13,11 @@ export default {
 
   after: {
     all: [],
-    find: [],
+    find: [
+      (ctx:HookContext)=>{
+        ctx.result.data = ctx.result.data.map((agenda:any)=>!agenda.userId ||agenda.userId==ctx.params.authentication?.payload.sid);
+      }
+    ],
     get: [],
     create: [],
     update: [],

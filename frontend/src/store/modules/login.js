@@ -16,14 +16,22 @@ const mutations = {
 
 const actions = {
     login({commit}, accessToken){
-        return feathersClient.authenticate({
-            'strategy': 'jwt',
-            'accessToken': accessToken
-        }).then(() => {
-            commit('login')
-        })
+        return feathersClient.reAuthenticate()
+            .catch(()=>feathersClient.authenticate({
+                'strategy': 'jwt',
+                'accessToken': accessToken
+            })).then(() => {
+                commit('login')
+            });
     }
     
 };
 
-export default {namespaced: true ,state, mutations, actions};
+const plugin = (store)=>{
+    feathersClient.reAuthenticate()
+        .then(()=>{
+            store.commit('login/login');
+        })
+}
+
+export default {namespaced: true ,state, mutations, actions, plugin};
