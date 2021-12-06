@@ -45,8 +45,8 @@ const mutations = {
     editEntry(state, param){
         let entry = {
             ...param,
-            startDate : new Date(entry.startDate),
-            endDate : new Date(entry.endDate),
+            startDate : new Date(param.startDate),
+            endDate : new Date(param.endDate),
         };
         if(state.entries[entry.id]==undefined)return state;
         state.entries[entry.id] = entry;
@@ -90,6 +90,11 @@ const actions = {
     deleteEntry(ignore, entryId){
         return service.remove(entryId).then(()=>{
             console.log('Deleted entry : ' + entryId);
+        });
+    },
+    updateEntry(ignore, entry){
+        return service.patch(entry.id, entry).then(()=>{
+            console.log('Updated entry : ' + entry.id);
         });
     },
     queryEntriesOfAgenda({commit}, {agendaId, start, end}){

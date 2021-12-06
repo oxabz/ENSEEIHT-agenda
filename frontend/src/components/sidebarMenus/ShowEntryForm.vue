@@ -18,8 +18,8 @@
             <p class="pl-3"> {{entry.startDate.toLocaleString()}} - {{entry.endDate.toLocaleString()}} </p>
         </div>
         <div class="flex justify-end h-full items-end">
-            <button class="btn btn-primary" v-on:click="editEntry"><i class="fas fa-edit"></i></button>
-            <button class="btn ml-1 btn-primary" v-on:click="deleteEntry"><i class="fas fa-trash"></i></button>
+            <button class="btn btn-ghost" v-on:click="editEntry"><i class="fas fa-edit"></i></button>
+            <button class="btn ml-1 btn-error" v-on:click="deleteEntry"><i class="fas fa-trash"></i></button>
         </div>
         
     </div>
@@ -31,8 +31,10 @@ export default {
             this.$store.commit('sidebar/close');
         },
         deleteEntry(){
-
             this.$store.dispatch('entry/deleteEntry',this.entry.id)
+        },
+        editEntry(){
+            this.$store.commit('sidebar/openWithProps',{menu:'createEntry', props:this.entry.id})
         },
     },
     computed:{

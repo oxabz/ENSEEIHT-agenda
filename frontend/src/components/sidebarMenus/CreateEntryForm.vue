@@ -1,7 +1,7 @@
 <template>
     <div class="create-entry-form h-full p-5 form-control relative">
         <div class="flex justify-between">
-            <h2 class="text-lg font-bold">Creer un evenement : </h2>
+            <h2 class="text-lg font-bold">{{this.id?'Editer un evenement : ':'Créer un evenement : '}}</h2>
             <button class="btn btn-ghost btn-sm" @click="closeSidebar"><i class="fas fa-times"></i></button>
         </div>
         <span class="divider opacity-30"></span>
@@ -38,7 +38,7 @@
             <input type="datetime-local" class="input input-bordered" v-model="endDate" placeholder="Fin" name="end">
         </div>
         <div class="flex justify-end h-full items-end">
-            <button class="btn btn-primary" v-on:click="createEntry">Créer !</button>
+            <button class="btn btn-primary" v-on:click="createEntry"><i class="fas fa-save mr-1"></i>{{this.id?'Save':'Créer !'}}</button>
         </div>
         
     </div>
@@ -46,13 +46,24 @@
 <script>
 export default {
     data(){
-        return {
+        const state = {
             title: null,
             description: null,
             startDate:null,
             endDate:null,
             alert:null
         };
+        const entry = this.$store.state.entry.entries[this.$store.state.sidebar.menuProps];
+        if(entry){
+            return {
+                ...state,
+                ...entry,
+                startDate:entry.startDate.toISOString(),
+                endDate:entry.endDate.toISOString(),
+            }
+        }else{
+            return state;
+        }
     },
     methods:{
         createEntry(){
@@ -65,13 +76,26 @@ export default {
                 this.alert = 'Tout les champs doivent être rempli';
                 return;
             }
-            this.$store.dispatch('entry/createEntry', {
-                agendaId,
-                title:this.title,
-                description:this.description||'',
-                startDate:this.startDate,
-                endDate:this.endDate
-            })  
+            if(this.id){
+                this.$store.dispatch('entry/updateEntry',  {
+                    agendaId:this.agendaId,
+                    id: this.id,
+                    title:this.title,
+                    description:this.description||'',
+                    startDate:this.startDate,
+                    endDate:this.endDate
+                });
+            }else{
+                this.$store.dispatch('entry/createEntry', {
+                    agendaId,
+                    title:this.title,
+                    description:this.description||'',
+                    startDate:this.startDate,
+                    endDate:this.endDate
+                });
+            }
+            
+             
         },
         closeSidebar(){
             this.$store.commit('sidebar/close')
