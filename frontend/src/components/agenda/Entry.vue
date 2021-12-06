@@ -112,6 +112,6 @@ export default {
     }
     div.entry:hover{
         z-index: 999;
-        
+        cursor: pointer;
     }
 </style>
