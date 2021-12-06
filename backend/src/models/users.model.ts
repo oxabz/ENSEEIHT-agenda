@@ -12,15 +12,17 @@ export default function (app: Application): Knex {
     if(!exists) {
       db.schema.createTable(tableName, table => {
         table.increments('id');
-      
-        table.string('email').unique();
+
+        table.string('pseudo').unique();
+
+        table.string('avatar');
         table.string('password');
-      
-      
+
+
         table.string('googleId');
-      
+
         table.string('githubId');
-      
+
       })
         .then(() => console.log(`Created ${tableName} table`))
         .catch(e => console.error(`Error creating ${tableName} table`, e));
