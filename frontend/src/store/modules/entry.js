@@ -52,9 +52,11 @@ const mutations = {
         state.entries[entry.id] = entry;
         return state
     },
-    remove(state, entryId){
+    removeEntry(state, entryId){
         if(state.entries[entryId]==undefined)return state;
+        state.entriesOfAgenda[state.entries[entryId].agendaId].entries = state.entriesOfAgenda[state.entries[entryId].agendaId].entries.filter(entryLId => entryLId != entryId);
         delete state.entries[entryId];
+        state.indicator++; //vuex black magic to force it to update
         return state;
     }
 }
@@ -79,10 +81,15 @@ const getters = {
 }
 
 const actions = {
-    createEntry(ignore,entry){
+    createEntry(ignore, entry){
         return service.create(entry).then((result)=>{
             console.log('Created entry : ' + result.id);
             return result;
+        });
+    },
+    deleteEntry(ignore, entryId){
+        return service.remove(entryId).then(()=>{
+            console.log('Deleted entry : ' + entryId);
         });
     },
     queryEntriesOfAgenda({commit}, {agendaId, start, end}){

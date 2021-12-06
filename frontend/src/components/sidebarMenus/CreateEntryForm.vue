@@ -5,17 +5,24 @@
             <button class="btn btn-ghost btn-sm" @click="closeSidebar"><i class="fas fa-times"></i></button>
         </div>
         <span class="divider opacity-30"></span>
+        <div v-if="alert!=null" class="alert alert-error">
+            <div class="flex-1">
+                <i class="fas fa-exclamation-triangle"></i>
+                <label>{{alert}}</label>
+            </div>
+        </div>
+
         <div class="form-control">
             <label class="label" for="title">
                 <span class="label-text text-xs opacity-70">Titre</span>
             </label>
-            <input class="w-full pr-16 input input-primary input-bordered" v-model="title" v-on:keyup.enter="submit" type="text" placeholder="Titre" name="title"/> 
+            <input class="w-full pr-16 input input-primary input-bordered" v-model="title" type="text" placeholder="Titre" name="title"/> 
         </div>
         <div class="form-control">
             <label class="label" for="description">
                 <span class="label-text text-xs opacity-70">Description</span>
             </label>
-            <textarea class="textarea w-full h-36 pr-16 textarea-bordered" v-model="description" v-on:keyup.enter="submit" type="text" placeholder="Description" name="description"/> 
+            <textarea class="textarea w-full h-36 pr-16 textarea-bordered" v-model="description"  type="text" placeholder="Description" name="description"/> 
         </div>
 
         <div class="form-control">
@@ -43,13 +50,21 @@ export default {
             title: null,
             description: null,
             startDate:null,
-            endDate:null
+            endDate:null,
+            alert:null
         };
     },
     methods:{
         createEntry(){
             let agendaId = this.$route?.params?.id;
-            if (!agendaId || !this.title || !this.startDate || !this.endDate) return;
+            if (new Date(this.startDate).getTime()>new Date(this.endDate).getTime()){
+                this.alert = 'La date de fin doit être superieure à la date de debut';
+                return;
+            }
+            if (!agendaId || !this.title || !this.startDate || !this.endDate){
+                this.alert = 'Tout les champs doivent être rempli';
+                return;
+            }
             this.$store.dispatch('entry/createEntry', {
                 agendaId,
                 title:this.title,

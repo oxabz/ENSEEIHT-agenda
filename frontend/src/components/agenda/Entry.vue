@@ -1,5 +1,5 @@
 <template>
-    <div class="entry absolute" :class="computedClass" :style="cssVars">
+    <div class="entry absolute" :class="computedClass" :style="cssVars" @click="show()">
         {{title}}
     </div>
 </template>
@@ -7,6 +7,9 @@
 import colors from '@/utils/colors'
 export default {
     props:{
+        id:{
+            type:String
+        },
         title:{
             type:String,
             default:'lorem ipsum'
@@ -85,6 +88,11 @@ export default {
                 'rounded-b-xl': this.endInColumn
             }
         },
+    },
+    methods:{
+        show(){
+            this.$store.commit('sidebar/openWithProps', {menu:'showEntry', props:this.id});
+        }
     }
 }
 </script>
@@ -104,5 +112,6 @@ export default {
     }
     div.entry:hover{
         z-index: 999;
+        
     }
 </style>
