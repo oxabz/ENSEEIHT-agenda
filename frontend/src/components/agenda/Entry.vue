@@ -99,12 +99,12 @@ export default {
 <style scoped>
     div.entry {
         padding: 0.25em;
-        width: calc(100% / var(--agenda-interval) - 0.25em * var(--entry-level));
+        width: calc(100% / var(--agenda-interval));
         min-width: 4rem;
         z-index: calc(2 + var(--entry-level));
-        height: calc(100% / 24 * var(--entry-duration) + 0.25em * var(--entry-level));
+        height: calc(100% / 24 * var(--entry-duration));
         top: calc(100% / 24 * var(--entry-start));
-        left: calc(100% / var(--agenda-interval) * var(--column-index));
+        left: calc(100% / var(--agenda-interval) * var(--column-index) + 0.55em * var(--entry-level));
         color: var(--entry-color);
         background-color: var(--entry-background-color);
         border: 2px solid;
