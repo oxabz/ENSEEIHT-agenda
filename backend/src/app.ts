@@ -4,7 +4,7 @@ import compress from 'compression';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import feathers, {HookContext as FeathersHookContext} from '@feathersjs/feathers';
+import feathers from '@feathersjs/feathers';
 import configuration from '@feathersjs/configuration';
 import express from '@feathersjs/express';
 import socketio from '@feathersjs/socketio';
@@ -21,7 +21,6 @@ import authentication from './authentication';
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const app: Application = express(feathers());
-export type HookContext<T = any> = { app: Application } & FeathersHookContext<T>;
 
 // Promise that allows us to initiate thing asynchronously (Ex : knex.ts)
 export default new Promise<Application>(async (resolve, ) => {

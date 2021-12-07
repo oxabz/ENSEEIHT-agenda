@@ -1,5 +1,6 @@
-import { HookContext } from '../../app';
+import { HookContext } from '@feathersjs/feathers';
 import hooks from '../../utils/hooks';
+
 
 export default {
   before: {
@@ -13,6 +14,7 @@ export default {
         const agenda = await ctx.app.service('agenda').get(agendaId);
         if(!agenda.userId)return;
         if(agenda.userId == ctx.params?.authentication?.payload.sub) throw new Error('Cant querry agendas that dont belong to you');
+        return ctx;
       },
     ],
     get: [],

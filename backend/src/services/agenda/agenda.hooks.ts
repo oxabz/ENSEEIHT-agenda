@@ -1,4 +1,4 @@
-import { HookContext } from '../../app';
+import { HookContext } from '@feathersjs/feathers';
 
 export default {
   before: {
@@ -14,8 +14,9 @@ export default {
   after: {
     all: [],
     find: [
-      (ctx:HookContext)=>{
-        ctx.result.data = ctx.result.data.filter((agenda:any)=>!agenda.userId ||agenda.userId==ctx.params.authentication?.payload.sid);
+      async (context:HookContext)=>{
+        context.result.data = context.result.data.filter((agenda:any)=>!agenda.userId ||agenda.userId==context.params.authentication?.payload.sid);
+        return context;
       }
     ],
     get: [],
