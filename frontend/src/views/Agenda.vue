@@ -11,8 +11,8 @@
 <script>
 import MenuButton from '../components/MenuButton.vue'
 import Sidebar from '../components/Sidebar.vue'
-import Agenda from '../components/Agenda/Agenda.vue';
-import TimelineNavigation from '../components/Agenda/TimelineNavigation.vue';
+import Agenda from '../components/agenda/Agenda.vue';
+import TimelineNavigation from '../components/agenda/TimelineNavigation.vue';
 
 const BREAKPOINTS = {
     'xs': 420,

@@ -15,7 +15,7 @@
     </table>
     <div class="w-full h-full overflow-y-auto agenda-body">
         <table class="table w-full relative">
-            <Entry v-for="entry in entriesProps" v-bind:key="entry" :title="entry.title" :column="entry.column" :columnIdx="entry.columnIdx" :startDate="entry.startDate" :endDate="entry.endDate" :color="entry.color"/>
+            <Entry v-for="entry in entriesProps" v-bind:key="entry.id" v-bind:id="entry.id" :title="entry.title" :column="entry.column" :columnIdx="entry.columnIdx" :startDate="entry.startDate" :endDate="entry.endDate" :color="entry.color"/>
             <tbody class="">
                 <tr v-for="time in timeArray" v-bind:key="time">
                     <td  v-for="(ignored, i) in dates" v-bind:key="i" class="opacity-50 text-xs h-12">{{time}}</td>
