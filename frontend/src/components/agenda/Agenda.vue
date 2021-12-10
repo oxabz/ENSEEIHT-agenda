@@ -83,7 +83,6 @@ export default {
         },
         entriesProps(){
             let entries = [...this.entries];
-            console.log(levels);
             entries.sort((a,b)=> a.startDate.getTime()-b.startDate.getTime());
             let levels = times.getSuperpositions(entries.map(entry => [entry.startDate.getTime(), entry.endDate.getTime()]));
             return this.dates.map((c,columnIdx)=>{

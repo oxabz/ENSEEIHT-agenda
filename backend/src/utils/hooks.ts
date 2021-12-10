@@ -5,7 +5,7 @@ import { HookContext } from '@feathersjs/feathers';
 const hooks={
   async optionalAuthenticate(ctx: HookContext){
     try {
-      return authenticate('jwt')(ctx);
+      return await authenticate('jwt')(ctx);
     } catch (error) {
       console.log(`Not authentified ${ctx.type}`);
       return ctx;

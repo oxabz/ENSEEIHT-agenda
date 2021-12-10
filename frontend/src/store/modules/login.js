@@ -31,6 +31,8 @@ const plugin = (store)=>{
     feathersClient.reAuthenticate()
         .then(()=>{
             store.commit('login/login');
+        }).catch(()=> {
+            store.commit('login/logout');
         })
 }
 

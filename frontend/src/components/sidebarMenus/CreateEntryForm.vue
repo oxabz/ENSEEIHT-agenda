@@ -58,8 +58,8 @@ export default {
             return {
                 ...state,
                 ...entry,
-                startDate:entry.startDate.toISOString(),
-                endDate:entry.endDate.toISOString(),
+                startDate:entry.startDate.toISOString().slice(0, -8),
+                endDate:entry.endDate.toISOString().slice(0, -8),
             }
         }else{
             return state;

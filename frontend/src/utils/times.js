@@ -30,7 +30,6 @@ const time = {
         return newIntervals;
     },
     getSuperpositions(intervals){
-        console.log(intervals);
         // Creating an array to recieve each interval height
         let superposition = intervals.map(()=>(null));
 
@@ -55,8 +54,6 @@ const time = {
             heights.push(height)
         });
 
-        console.log(events);
-        console.log(superposition);
 
         return superposition;
     }

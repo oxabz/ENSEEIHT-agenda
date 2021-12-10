@@ -18,7 +18,6 @@ export default function(app: Application): void {
     // real-time connection, e.g. when logging in via REST
     
     if(connection) {
-      console.log('test');
       return;
       // Obtain the logged in user from the connection
       // const user = connection.user;

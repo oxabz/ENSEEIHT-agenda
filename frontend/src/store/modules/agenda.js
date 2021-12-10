@@ -58,7 +58,6 @@ const actions = {
             console.log('Created agenda : ' + result.id);
             store.commit("addRecentAgenda", result.id);
             store.commit("addAgenda", result);
-            console.log(JSON.stringify(store.state.recentagenda));
             localStorage.setItem('recentAgenda', JSON.stringify(store.state.recentagenda));
             return result;
         });
