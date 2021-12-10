@@ -1,3 +1,4 @@
+import { HookContext } from '@feathersjs/feathers';
 
 export default {
   before: {
@@ -12,7 +13,12 @@ export default {
 
   after: {
     all: [],
-    find: [],
+    find: [
+      async (context:HookContext)=>{
+        context.result.data = context.result.data.filter((agenda:any)=>!agenda.userId ||agenda.userId==context.params.authentication?.payload.sid);
+        return context;
+      }
+    ],
     get: [],
     create: [],
     update: [],
