@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Agenda from '../views/Agenda.vue'
 import Authentification from '../views/Authentification.vue'
+import ShowEntryForm from '../components/sidebarMenus/ShowEntryForm.vue'
 
 const routes = [
   {
@@ -25,6 +26,10 @@ const routes = [
   {
     path: '/agenda/:id',
     component: Agenda
+  },
+  {
+    path: '/view/showEntry',
+    component: ShowEntryForm
   }
 ]
 

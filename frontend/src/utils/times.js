@@ -28,6 +28,37 @@ const time = {
         }
         newIntervals.splice(newIdx, 0, newInterval);
         return newIntervals;
+    },
+    getSuperpositions(intervals){
+        console.log(intervals);
+        // Creating an array to recieve each interval height
+        let superposition = intervals.map(()=>(null));
+
+        // Creating an array that contains every events up/down sorted
+        let events = intervals.map((interval,idx) => [[interval[0], idx],[interval[1], idx]]).flat();
+        events.sort((a,b) => a[0] - b[0]);
+        
+        // Array to store the current height
+        let heights = [];
+
+        events.forEach(e => {
+            // If the superposition is already set this is the end of the event 
+            if(superposition[e[1]]!=null){
+                //Then remove the height on the height array
+                heights = heights.filter(x=>x!=superposition[e[1]]);
+                return;
+            }
+
+            // The height of the current interval is the max height +1 
+            const height = heights[heights.length-1] + 1 || 0;
+            superposition[e[1]] = height;
+            heights.push(height)
+        });
+
+        console.log(events);
+        console.log(superposition);
+
+        return superposition;
     }
 }
 
