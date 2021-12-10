@@ -8,6 +8,7 @@
         <p class="mb-5">
           Utilisez cette agenda révolutionaire dés aujourd'hui!  
         </p> 
+        <Profile/>
         <NewAgenda title="Créez votre premier calendrier" label="Go !" :onCreate="handleCreate"/>
         <Login/>
       </div>
@@ -19,11 +20,13 @@
 // @ is an alias to /src
 import NewAgenda from '../components/NewAgenda.vue'
 import Login from '../components/Login.vue'
+import Profile from '../components/Profile.vue'
 
 export default {
   name: 'Home',
   components: {
     Login,
+    Profile,
     NewAgenda
   },
   methods:{
