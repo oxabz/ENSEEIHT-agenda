@@ -65,14 +65,15 @@ const plugin = store => {
         localStorage.setItem('recentAgenda', JSON.stringify(store.state.agenda.recentagenda));
     });
 
+
     // Initializing My Agendas on login
-    feathersClient.on('login',()=>{
+    feathersClient.on('loged',()=>{
         store.dispatch('agenda/queryMyAgenda');
     })
 
     // Event reactivity
     service.on('created', (agenda)=>{
-        if(agenda.userId == store.login.self){
+        if(agenda.userId == store.state.login.self){
             store.commit("agenda/addAgenda", agenda);
             store.commit('agenda/addMyAgenda', agenda.id);
         }
@@ -103,8 +104,8 @@ const actions = {
             query
         }).then(res=>{
             res.data.forEach(agenda => {
-                store.commit("agenda/addAgenda", agenda);
-                store.commit('agenda/addMyAgenda', agenda.id);
+                store.commit("addAgenda", agenda);
+                store.commit('addMyAgenda', agenda.id);
             });
         }).catch(()=>[]);
     },

@@ -9,6 +9,7 @@ const mutations = {
     login(state, id) {
         state.self = id;
         state.login = true;
+        feathersClient.emit('loged');
     },
     logout(state) {
         state.login = false;
@@ -23,7 +24,7 @@ const actions = {
                 'strategy': 'jwt',
                 'accessToken': accessToken
             })).then((res) => {
-                commit('login',res.id)
+                commit('login',res.user.id)
             });
     }
     
@@ -32,7 +33,7 @@ const actions = {
 const plugin = (store)=>{
     feathersClient.reAuthenticate()
         .then((res)=>{
-            store.commit('login/login',res.id);
+            store.commit('login/login',res.user.id);
         }).catch(()=> {
             store.commit('login/logout');
         })

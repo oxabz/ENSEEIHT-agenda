@@ -3,13 +3,16 @@
 </template>
 <script>
 export default {
-    props: ['menu'],
+    props: ['menu', 'props'],
     methods:{
         toggleMenu(){
             if(this.$store.state.sidebar.selectedMenu != this.menu){
-               this.$store.commit("sidebar/open",this.menu); 
-            }
-            else{
+                if(this.props){
+                    this.$store.commit("sidebar/openWithProps",{menu:this.menu, props:this.props});
+                }else{
+                    this.$store.commit("sidebar/open",this.menu);
+                } 
+            } else{
                this.$store.commit("sidebar/close");
             }
         }

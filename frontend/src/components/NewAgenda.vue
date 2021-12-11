@@ -11,8 +11,8 @@
 </template>
 <script>
 export default {
-    props:['label', 'title', 'onCreate'],
-    name:'NewAgendaVue',
+    props:['label', 'title', 'onCreate', 'private'],
+    name:'NewAgenda',
     data(){
         return{
             newAgendaName:''
@@ -20,10 +20,12 @@ export default {
     },
     methods:{
         submit(){
+            let agenda = {
+                name: this.newAgendaName,
+            };
             if(this.newAgendaName.length == 0)return;
-            this.$store.dispatch('agenda/createAgenda',{
-                name: this.newAgendaName
-            }).then((result) => {
+            if(this.private)agenda.userId='self';
+            this.$store.dispatch('agenda/createAgenda',agenda).then((result) => {
                 if(this.onCreate)this.onCreate(result);
             }).catch((err) => {
                 console.error('Failed creating an agenda : ', err);

@@ -3,7 +3,8 @@
     <div class="w-full relative h-screen flex flex-col">
         <TimelineNavigation :initial-date="startDate" :interval="interval" :changeDate="handleChange"/>
         <Agenda :start="startDate" :interval="interval" :entries="agendaEntries"/>
-        <MenuButton class="absolute right-4 bottom-4 btn-circle" menu="createEntry"><i class="fas fa-plus text-xl"></i></MenuButton>
+        <MenuButton class="absolute right-4 bottom-4 btn btn-primary btn-circle" menu="createEntry"><i class="fas fa-plus text-xl"></i></MenuButton>
+        <MenuButton class="absolute right-6 bottom-20 btn btn-ghost btn-circle btn-sm" menu="agendas" :props="{agendas:this.agendas, setVisible:this.setVisible}"><i class="fas fa-list "></i></MenuButton>
     </div>
     <Sidebar/>
 </div>
@@ -30,36 +31,36 @@ export default {
         return {
             windowWidth: window.innerWidth,
             startDate,
+            visible:{}
         }
     },
     methods:{
-        create(){
-            const agendaId = this.$route.params.id;
-            this.$store.dispatch('entry/createEntry', {
-                agendaId,
-                titre:'test',
-                description:'test'
-            })
-        },
         onResize() {
             this.windowWidth = window.innerWidth;
+        },
+        setVisible(agendaId, visible){
+            this.visible[agendaId] = visible;
         }
     },
     computed:{
+        agendas(){
+            const agenda = this.$store.state.agenda;
+            return agenda.myAgendas.map(a=>agenda.agendas[a]);
+        },
         agendaEntries(){
             const entry = this.$store.state.entry;
             const agenda = this.$store.state.agenda;
             let endDate = new Date(this.startDate)
             endDate.setDate(endDate.getDate()+this.interval)
-            return agenda.myAgendas.map((agenda)=>{
+            return agenda.myAgendas.filter(agenda=>this.visible[agenda]==undefined || this.visible[agenda]).map((agenda)=>{
                 if (!this.$store.getters['entry/hasInfoOnAgenda']({agendaId:agenda, start:this.startDate.getTime(), end:endDate.getTime()})){
                     this.$store.dispatch('entry/queryEntriesOfAgenda',{agendaId:agenda, start:this.startDate, end:endDate});
                     return [];
                 }
                 return entry.entriesOfAgenda[agenda].entries.map(id => {
-                    let entry = entry.entries[id];
-                    entry.color = colors.stringToColors(agenda);
-                    return entry;
+                    let e = entry.entries[id];
+                    e.color = colors.stringToColors(agenda);
+                    return e;
                 });
             }).flat();
         },
