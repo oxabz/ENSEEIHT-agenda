@@ -7,7 +7,7 @@ const hooks={
     try {
       return await authenticate('jwt')(ctx);
     } catch (error) {
-      console.log(`Not authentified ${ctx.type}`);
+      console.log(`Not authentified ${ctx.type}`, typeof error);
       return ctx;
     }
   }
