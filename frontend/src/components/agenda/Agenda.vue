@@ -18,7 +18,7 @@
             <Entry v-for="entry in entriesProps" v-bind:key="entry" v-bind:id="entry.id" :title="entry.title" :column="entry.column" :columnIdx="entry.columnIdx" :startDate="entry.startDate" :endDate="entry.endDate" :color="entry.color" :level="entry.level"/>
             <tbody class="">
                 <tr v-for="time in timeArray" v-bind:key="time">
-                    <td  v-for="(ignored, i) in dates" v-bind:key="i" class="opacity-50 text-xs h-12">{{time}}</td>
+                    <td  v-for="(date, i) in dates" v-bind:key="i" class="opacity-50 text-xs h-12" @click="openCreateEntry(date, time)">{{time}}</td>
                 </tr>
             </tbody>
         </table>
@@ -107,6 +107,25 @@ export default {
                         }
                     })
             }).flat();
+        },
+    },
+    methods:{
+        openCreateEntry(date, time){
+            const spltTime = time.split(':');
+            let startDate = new Date(date.time);
+            startDate.setHours(spltTime[0]);
+            startDate.setMinutes(spltTime[1]);
+            let endDate = new Date(date.time);
+            endDate.setHours(spltTime[0]);
+            endDate.setMinutes(spltTime[1]+30);
+            
+            this.$store.commit('sidebar/openWithProps', {
+                menu:"createEntry",
+                props: {
+                    startDate,
+                    endDate
+                }
+            })
         }
     },
     components: { Entry }

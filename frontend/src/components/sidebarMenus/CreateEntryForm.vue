@@ -46,14 +46,9 @@
 <script>
 export default {
     data(){
-        const state = {
-            title: null,
-            description: null,
-            startDate:null,
-            endDate:null,
-            alert:null
-        };
-        const entry = this.$store.state.entry.entries[this.$store.state.sidebar.menuProps];
+        const state = {...this.$store.state.sidebar.menuProps};
+        const entry = this.$store.state.entry.entries[this.$store.state.sidebar.menuProps.id];
+        console.log(state);
         if(entry){
             return {
                 ...state,
@@ -62,6 +57,8 @@ export default {
                 endDate:entry.endDate.toISOString().slice(0, -8),
             }
         }else{
+            if( state.startDate) state.startDate = state.startDate.toISOString().slice(0, -8);
+            if( state.endDate) state.endDate = state.endDate.toISOString().slice(0, -8);
             return state;
         }
     },
@@ -99,7 +96,7 @@ export default {
         },
         closeSidebar(){
             this.$store.commit('sidebar/close')
-        }
+        },
     }
 }
 </script>
