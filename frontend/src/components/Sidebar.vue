@@ -1,12 +1,9 @@
                                                                                 <template>
 <div class="sidebar" v-bind:class="classObject">
-    <div class="sidebar-placeholder relative h-full ">
-        
-    </div>
+    <div class="sidebar-placeholder relative h-full "></div>
     <div class="sidebar-container h-screen  border-l-2 fixed right-0 top-0"> 
         <CreateEntryForm v-if="this.$store.state.sidebar.selectedMenu == 'createEntry'"/>
         <ShowEntryForm v-else-if="this.$store.state.sidebar.selectedMenu == 'showEntry'"/>
-        <p v-else>oups</p>
     </div>
 </div>
 </template>

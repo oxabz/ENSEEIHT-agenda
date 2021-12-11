@@ -31,10 +31,11 @@ export default {
             this.$store.commit('sidebar/close');
         },
         deleteEntry(){
-            this.$store.dispatch('entry/deleteEntry',this.entry.id)
+            this.$store.dispatch('entry/deleteEntry',this.entry.id);
+            this.$store.commit('sidebar/close');
         },
         editEntry(){
-            this.$store.commit('sidebar/openWithProps',{menu:'createEntry', props:this.entry.id})
+            this.$store.commit('sidebar/openWithProps',{menu:'createEntry', props:{id:this.entry.id}})
         },
     },
     computed:{
