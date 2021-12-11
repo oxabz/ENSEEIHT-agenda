@@ -26,7 +26,6 @@ const mutations = {
         return state;
     },
     setRecentAgendas(state,recentAgenda){
-
         state.recentagenda=recentAgenda;
         return state;
     },
