@@ -11,7 +11,14 @@
                 <label>{{alert}}</label>
             </div>
         </div>
-
+        <div v-if="$route?.params?.id||agendaId == undefined">
+            <label class="label" for="agenda">
+                <span class="label-text text-xs opacity-70">Agenda</span>
+            </label>
+            <select class="w-full pr-16 input input-primary input-bordered" v-model="agenda" type="text" name="agenda"> 
+                <option v-for="agenda in this.$store.state.agenda.myAgendas" :key={agenda} :value="agenda">{{this.$store.state.agenda.agendas[agenda]}}</option>
+            </select>
+        </div>
         <div class="form-control">
             <label class="label" for="title">
                 <span class="label-text text-xs opacity-70">Titre</span>

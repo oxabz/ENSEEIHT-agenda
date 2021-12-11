@@ -2,10 +2,12 @@ import feathersClient from "../../feathers-client";
 
 const state = {
     login: false,
+    self: '',
 }
 
 const mutations = {
-    login(state) {
+    login(state, id) {
+        state.self = id;
         state.login = true;
     },
     logout(state) {
@@ -20,8 +22,8 @@ const actions = {
             .catch(()=>feathersClient.authenticate({
                 'strategy': 'jwt',
                 'accessToken': accessToken
-            })).then(() => {
-                commit('login')
+            })).then((res) => {
+                commit('login',res.id)
             });
     }
     
@@ -29,8 +31,8 @@ const actions = {
 
 const plugin = (store)=>{
     feathersClient.reAuthenticate()
-        .then(()=>{
-            store.commit('login/login');
+        .then((res)=>{
+            store.commit('login/login',res.id);
         }).catch(()=> {
             store.commit('login/logout');
         })

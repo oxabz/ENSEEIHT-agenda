@@ -57,6 +57,7 @@ export default new Promise<Application>(async (resolve, ) => {
   app.use(express.errorHandler({logger} as any));
 
   app.hooks(appHooks);
+
   resolve(app);
 });
 

@@ -99,8 +99,8 @@ export default {
                     .map((entry, entryIdx) => {
                         const color = colors.stringToColors(entry.title) 
                         return{
-                            ...entry,
                             color,
+                            ...entry,
                             column,
                             columnIdx,
                             level: levels[entryIdx]
