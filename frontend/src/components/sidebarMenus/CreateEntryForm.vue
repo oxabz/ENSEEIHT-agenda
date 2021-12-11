@@ -70,7 +70,8 @@ export default {
     },
     methods:{
         createEntry(){
-            let agendaId = this.$route?.params?.id || this.agenda;
+            let agendaId = this.$route?.params?.id || this.agendaId || this.agenda;
+             console.log(this);
             if (new Date(this.startDate).getTime()>new Date(this.endDate).getTime()){
                 this.alert = 'La date de fin doit être superieure à la date de debut';
                 return;
