@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="text-left font-black space-y-5 mx-4"  > Agenda récent : </h2>
+        <h2 class=" text-left text-xs opacity-80"  > Consultez vos agendas récents : </h2>
         <ul>
             <li v-for="recent in recentAgendas" :key="recent"> 
                 <button class=" btn btn-ghost w-full" v-on:click="submit(recent)">{{ recent.name }}</button>
@@ -12,12 +12,9 @@
 <script>
 export default {
     computed:{ 
-
         recentAgendas(){
            let agenda = this.$store.state.agenda;
-           console.log(agenda.recentagenda.map(agendaid => agenda.agendas[agendaid]));
-           return agenda.recentagenda.map(agendaid => agenda.agendas[agendaid]);
-               
+           return agenda.recentagenda.map(agendaid => agenda.agendas[agendaid]).filter(agenda => !!agenda);
         }
     },
  

@@ -113,11 +113,11 @@ export default {
         openCreateEntry(date, time){
             const spltTime = time.split(':');
             let startDate = new Date(date.time);
-            startDate.setHours(spltTime[0]);
-            startDate.setMinutes(spltTime[1]);
+            startDate.setHours(parseInt(spltTime[0]));
+            startDate.setMinutes(parseInt(spltTime[1]));
             let endDate = new Date(date.time);
-            endDate.setHours(spltTime[0]);
-            endDate.setMinutes(spltTime[1]+30);
+            endDate.setHours(parseInt(spltTime[0]));
+            endDate.setMinutes(parseInt(spltTime[1])+30);
             
             this.$store.commit('sidebar/openWithProps', {
                 menu:"createEntry",
