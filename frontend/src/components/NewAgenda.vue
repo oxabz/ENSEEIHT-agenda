@@ -25,6 +25,7 @@ export default {
             };
             if(this.newAgendaName.length == 0)return;
             if(this.private)agenda.userId='self';
+            console.log(agenda);
             this.$store.dispatch('agenda/createAgenda',agenda).then((result) => {
                 if(this.onCreate)this.onCreate(result);
             }).catch((err) => {
