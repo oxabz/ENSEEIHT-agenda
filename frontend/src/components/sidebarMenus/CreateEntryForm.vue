@@ -91,8 +91,6 @@ export default {
                     endDate:this.endDate
                 });
             }
-            
-             
         },
         closeSidebar(){
             this.$store.commit('sidebar/close')

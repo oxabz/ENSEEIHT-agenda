@@ -1,11 +1,27 @@
+import { Forbidden, NotAuthenticated } from '@feathersjs/errors';
 import { HookContext } from '@feathersjs/feathers';
+import hooks from '../../utils/hooks';
 
 export default {
   before: {
-    all: [],
-    find: [],
+    all: [hooks.optionalAuthenticate],
+    find: [
+      async (context:HookContext)=>{
+        if(context.params.query?.userId != 'self')return;
+        if(!context.params.authenticated) throw new NotAuthenticated('Cant use "self" when you are not authenticated');
+        context.params.query.userId = context.params.authentication?.payload.sid;
+        return context;
+      }],
     get: [],
-    create: [],
+    create: [
+      async (context:HookContext)=>{
+        if(!context.params.userId)return;
+        if(context.params.userId != 'self') throw new Forbidden('Cant create an agenda for an other user');
+        if(!context.params.authenticated) throw new NotAuthenticated('Cant use "self" when you are not authenticated');
+        context.params.userId = context.params.authentication?.payload.sid;
+        return context;
+      }
+    ],
     update: [],
     patch: [],
     remove: []
