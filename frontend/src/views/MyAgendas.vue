@@ -89,6 +89,9 @@ export default {
     mounted() {
         this.$nextTick(() => {
             window.addEventListener('resize', this.onResize);
+        });
+        this.$store.state.login.ready.then(()=>{
+            if(!this.$store.state.login.login) {this.$router.push('/login');}
         })
     },
     beforeUnmount() { 

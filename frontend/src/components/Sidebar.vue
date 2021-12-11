@@ -63,6 +63,7 @@ div.sidebar-container{
     width: var(--sidebar-width);
     transition: .75s right ease-in-out;
     overflow: hidden;
+    overflow-y: scroll;
 }
 
 

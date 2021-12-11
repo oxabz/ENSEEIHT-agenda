@@ -1,7 +1,7 @@
 <template>
     <div class="form-control">
         <label class="label" for="title">
-            <span class="label-text text-xs opacity-80">{{this.title}}</span>
+            <span class="label-text text-left text-xs opacity-80">{{this.title}}</span>
         </label>
         <div class="relative">
             <input class="w-full pr-16 input input-primary input-bordered" v-model="newAgendaName" v-on:keyup.enter="submit" type="text" placeholder="Titre" name="title"/> 

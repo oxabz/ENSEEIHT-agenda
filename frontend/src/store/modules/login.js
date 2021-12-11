@@ -3,6 +3,7 @@ import feathersClient from "../../feathers-client";
 const state = {
     login: false,
     self: '',
+    ready: null,
 }
 
 const mutations = {
@@ -13,8 +14,10 @@ const mutations = {
     },
     logout(state) {
         state.login = false;
+    },
+    setWaiting(state, promise){
+        state.ready = promise;
     }
-
 }
 
 const actions = {
@@ -26,17 +29,17 @@ const actions = {
             })).then((res) => {
                 commit('login',res.user.id)
             });
-    }
-    
+    },
+
 };
 
 const plugin = (store)=>{
-    feathersClient.reAuthenticate()
-        .then((res)=>{
-            store.commit('login/login',res.user.id);
-        }).catch(()=> {
-            store.commit('login/logout');
-        })
+    store.commit('login/setWaiting', feathersClient.reAuthenticate()
+    .then((res)=>{
+        store.commit('login/login',res.user.id);
+    }).catch(()=> {
+        store.commit('login/logout');
+    }));
 }
 
 export default {namespaced: true ,state, mutations, actions, plugin};
