@@ -11,7 +11,14 @@
                 <label>{{alert}}</label>
             </div>
         </div>
-
+        <div v-if="$route?.params?.id||agendaId == undefined">
+            <label class="label" for="agenda">
+                <span class="label-text text-xs opacity-70">Agenda</span>
+            </label>
+            <select class="w-full pr-16 input input-primary input-bordered" v-model="agenda" type="text" name="agenda"> 
+                <option v-for="agenda in this.$store.state.agenda.myAgendas" :key={agenda} :value="agenda">{{this.$store.state.agenda.agendas[agenda].name}}</option>
+            </select>
+        </div>
         <div class="form-control">
             <label class="label" for="title">
                 <span class="label-text text-xs opacity-70">Titre</span>
@@ -48,7 +55,6 @@ export default {
     data(){
         const state = {...this.$store.state.sidebar.menuProps};
         const entry = this.$store.state.entry.entries[this.$store.state.sidebar.menuProps.id];
-        console.log(state);
         if(entry){
             return {
                 ...state,
@@ -64,7 +70,8 @@ export default {
     },
     methods:{
         createEntry(){
-            let agendaId = this.$route?.params?.id;
+            let agendaId = this.$route?.params?.id || this.agendaId || this.agenda;
+             console.log(this);
             if (new Date(this.startDate).getTime()>new Date(this.endDate).getTime()){
                 this.alert = 'La date de fin doit être superieure à la date de debut';
                 return;

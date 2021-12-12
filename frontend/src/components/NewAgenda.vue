@@ -1,7 +1,7 @@
 <template>
     <div class="form-control">
         <label class="label" for="title">
-            <span class="label-text text-xs opacity-80">{{this.title}}</span>
+            <span class="label-text text-left text-xs opacity-80">{{this.title}}</span>
         </label>
         <div class="relative">
             <input class="w-full pr-16 input input-primary input-bordered" v-model="newAgendaName" v-on:keyup.enter="submit" type="text" placeholder="Titre" name="title"/> 
@@ -11,8 +11,8 @@
 </template>
 <script>
 export default {
-    props:['label', 'title', 'onCreate'],
-    name:'NewAgendaVue',
+    props:['label', 'title', 'onCreate', 'private'],
+    name:'NewAgenda',
     data(){
         return{
             newAgendaName:''
@@ -20,10 +20,13 @@ export default {
     },
     methods:{
         submit(){
+            let agenda = {
+                name: this.newAgendaName,
+            };
             if(this.newAgendaName.length == 0)return;
-            this.$store.dispatch('agenda/createAgenda',{
-                name: this.newAgendaName
-            }).then((result) => {
+            if(this.private)agenda.userId='self';
+            console.log(agenda);
+            this.$store.dispatch('agenda/createAgenda',agenda).then((result) => {
                 if(this.onCreate)this.onCreate(result);
             }).catch((err) => {
                 console.error('Failed creating an agenda : ', err);

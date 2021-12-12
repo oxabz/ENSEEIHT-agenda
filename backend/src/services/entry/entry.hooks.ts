@@ -14,7 +14,7 @@ export default {
         const agendaId = ctx.params.query.agendaId;
         const agenda = await ctx.app.service('agenda').get(agendaId);
         if(!agenda.userId)return;
-        if(agenda.userId == ctx.params?.authentication?.payload.sub) throw new Forbidden('Cant querry agendas that dont belong to you');
+        if(agenda.userId != ctx.params?.authentication?.payload.sub) throw new Forbidden('Cant query agendas that dont belong to you');
         return ctx;
       },
     ],

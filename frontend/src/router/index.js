@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Agenda from '../views/Agenda.vue'
 import Authentification from '../views/Authentification.vue'
-import ShowEntryForm from '../components/sidebarMenus/ShowEntryForm.vue'
+import MyAgendas from '../views/MyAgendas.vue'
+import Login from '../views/Login.vue'
 
 const routes = [
   {
@@ -28,8 +29,12 @@ const routes = [
     component: Agenda
   },
   {
-    path: '/view/showEntry',
-    component: ShowEntryForm
+    path: '/myAgendas',
+    component: MyAgendas
+  },
+  {
+    path: '/login',
+    component: Login
   }
 ]
 

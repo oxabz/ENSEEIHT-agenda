@@ -2,16 +2,22 @@ import feathersClient from "../../feathers-client";
 
 const state = {
     login: false,
+    self: '',
+    ready: null,
 }
 
 const mutations = {
-    login(state) {
+    login(state, id) {
+        state.self = id;
         state.login = true;
+        feathersClient.emit('loged');
     },
     logout(state) {
         state.login = false;
+    },
+    setWaiting(state, promise){
+        state.ready = promise;
     }
-
 }
 
 const actions = {
@@ -20,20 +26,20 @@ const actions = {
             .catch(()=>feathersClient.authenticate({
                 'strategy': 'jwt',
                 'accessToken': accessToken
-            })).then(() => {
-                commit('login')
+            })).then((res) => {
+                commit('login',res.user.id)
             });
-    }
-    
+    },
+
 };
 
 const plugin = (store)=>{
-    feathersClient.reAuthenticate()
-        .then(()=>{
-            store.commit('login/login');
-        }).catch(()=> {
-            store.commit('login/logout');
-        })
+    store.commit('login/setWaiting', feathersClient.reAuthenticate()
+    .then((res)=>{
+        store.commit('login/login',res.user.id);
+    }).catch(()=> {
+        store.commit('login/logout');
+    }));
 }
 
 export default {namespaced: true ,state, mutations, actions, plugin};

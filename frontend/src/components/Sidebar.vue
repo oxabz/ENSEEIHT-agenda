@@ -4,12 +4,14 @@
     <div class="sidebar-container h-screen  border-l-2 fixed right-0 top-0"> 
         <CreateEntryForm v-if="this.$store.state.sidebar.selectedMenu == 'createEntry'"/>
         <ShowEntryForm v-else-if="this.$store.state.sidebar.selectedMenu == 'showEntry'"/>
+        <Agendas v-else-if="this.$store.state.sidebar.selectedMenu == 'agendas'"/>
     </div>
 </div>
 </template>
 <script>
 import CreateEntryForm from '@/components/sidebarMenus/CreateEntryForm.vue'
 import ShowEntryForm from '@/components/sidebarMenus/ShowEntryForm.vue'
+import Agendas from './sidebarMenus/Agendas.vue'
 export default {
     computed:{
         classObject(){
@@ -19,9 +21,10 @@ export default {
         }
     },
     components:{
-        CreateEntryForm,
-        ShowEntryForm
-    }
+    CreateEntryForm,
+    ShowEntryForm,
+    Agendas
+}
 }
 </script>
 <style scoped>
@@ -60,6 +63,7 @@ div.sidebar-container{
     width: var(--sidebar-width);
     transition: .75s right ease-in-out;
     overflow: hidden;
+    overflow-y: scroll;
 }
 
 
