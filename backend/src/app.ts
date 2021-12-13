@@ -39,10 +39,7 @@ export default new Promise<Application>(async (resolve, ) => {
   // Host the public folder
   app.use('/', express.static(app.get('public')));
   //Setting up routes for the views 
-  app.configure(views);
-  
-  console.log(app.get('authentication'));
-  
+  app.configure(views);  
 
   // Set up Plugins and providers
   app.configure(express.rest());
