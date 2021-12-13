@@ -40,6 +40,9 @@ export default new Promise<Application>(async (resolve, ) => {
   app.use('/', express.static(app.get('public')));
   //Setting up routes for the views 
   app.configure(views);
+  
+  console.log(app.get('authentication'));
+  
 
   // Set up Plugins and providers
   app.configure(express.rest());

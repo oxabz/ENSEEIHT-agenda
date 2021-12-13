@@ -1,6 +1,55 @@
 {
+  "host": "localhost",
+  "port": 3030,
+  "public": "../public/",
+  "paginate": {
+    "default": 20,
+    "max": 500
+  },
+  "authentication": {
+    "entity": "user",
+    "service": "users",
+    "secret": "H7emc4xv8un6iavmXHLKTlf8VpQ=",
+    "authStrategies": [
+      "jwt",
+      "local"
+    ],
+    "jwtOptions": {
+      "header": {
+        "typ": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "local": {
+      "usernameField": "email",
+      "passwordField": "password"
+    },
+    "oauth": {
+      "redirect": "http://localhost:3030/auth",
+      "defaults": {
+        "host":"localhost:3030",
+        "protocol": "http"
+      },
+      "google": {
+        "key": "<google oauth key>",
+        "secret": "<google oauth secret>",
+        "scope": [
+          "email",
+          "profile",
+          "openid"
+        ]
+      },
+      "github": {
+        "key": "cfd86ba1a2e4ea9257ef",
+        "secret": "212f16e9bed2bfa6d0a3ab994c219dbae14e7c2e"
+      }
+    }
+  },
   "postgres": {
     "client": "pg",
-    "connection": "postgres://postgres:postgres@enseeiht_agenda_db:5432/fs-enseeiht-agenda"
+    "connection": "postgres://postgres:postgres@localhost:5432/fs-enseeiht-agenda"
   }
 }

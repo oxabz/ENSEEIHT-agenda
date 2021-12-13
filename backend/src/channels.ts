@@ -18,15 +18,14 @@ export default function(app: Application): void {
     // real-time connection, e.g. when logging in via REST
     
     if(connection) {
-      return;
       // Obtain the logged in user from the connection
       // const user = connection.user;
       
       // The connection is no longer anonymous, remove it
-      app.channel('anonymous').leave(connection);
+      //app.channel('anonymous').leave(connection);
 
       // Add it to the authenticated user channel
-      app.channel('authenticated').join(connection);
+      //app.channel('authenticated').join(connection);
 
       // Channels can be named anything and joined on any condition 
       
@@ -38,19 +37,28 @@ export default function(app: Application): void {
       
       // Easily organize users by email and userid for things like messaging
       // app.channel(`emails/${user.email}`).join(connection);
-      // app.channel(`userIds/${user.id}`).join(connection);
+      app.channel(`userIds/${authResult.user.id}`).join(connection);
     }
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  app.publish((data: any, hook: HookContext) => {
+  /*app.publish((data: any, hook: HookContext) => {
     console.log(`Publishing ${hook.method} of ${hook.path} on anonymous`);
     return app.channel('anonymous');
-  });
+  });*/
 
   // Here you can also add service specific event publishers
   // e.g. the publish the `users` service `created` event to the `admins` channel
-  // app.service('users').publish('created', () => app.channel('admins'));
+  app.service('entry').publish(async(data: any, ) => {
+    const agenda = await app.service('agenda').get(data.agendaId);
+    if(!agenda.userId) return app.channel('anonymous');
+    return app.channel(`userIds/${agenda.userId}`);
+  });
+
+  app.service('agenda').publish((data: any, ) => {
+    if(!data.userId) return app.channel('anonymous');
+    return app.channel(`userIds/${data.userId}`);
+  });
   
   // With the userid and email organization from above you can easily select involved users
   // app.service('messages').publish(() => {
