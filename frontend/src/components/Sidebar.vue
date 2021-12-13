@@ -58,7 +58,6 @@ div.sidebar-placeholder{
 }
 
 div.sidebar-container{
-    background-color: white;
     right: calc(var(--sidebar-width) * -1);
     width: var(--sidebar-width);
     transition: .75s right ease-in-out;
