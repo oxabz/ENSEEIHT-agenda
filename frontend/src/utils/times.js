@@ -56,6 +56,13 @@ const time = {
 
 
         return superposition;
+    },
+    formatForInput(date){
+        let split = date.toLocaleString( 'sv', { timeZoneName: 'short' } ).split(' ');
+        let time = split[1].split(':');
+        if (time[0].length!= 2) time[0] = '0'+time[0];
+        if (time[1].length!= 2) time[1] = '0'+time[1];
+        return [split[0], time.join(':')].join('T').slice(0,-3)
     }
 }
 

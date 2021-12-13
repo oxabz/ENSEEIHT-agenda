@@ -50,7 +50,8 @@
         
     </div>
 </template>
-<script>
+<script>import time from "../../utils/times";
+
 export default {
     data(){
         const state = {...this.$store.state.sidebar.menuProps};
@@ -59,12 +60,13 @@ export default {
             return {
                 ...state,
                 ...entry,
-                startDate:entry.startDate.toISOString().slice(0, -8),
-                endDate:entry.endDate.toISOString().slice(0, -8),
+                startDate:time.formatForInput(entry.startDate),
+                endDate:time.formatForInput(entry.endDate),
             }
         }else{
-            if( state.startDate) state.startDate = state.startDate.toISOString().slice(0, -8);
-            if( state.endDate) state.endDate = state.endDate.toISOString().slice(0, -8);
+
+            if( state.startDate) state.startDate = time.formatForInput(state.startDate);
+            if( state.endDate) state.endDate = time.formatForInput(state.endDate);
             return state;
         }
     },
