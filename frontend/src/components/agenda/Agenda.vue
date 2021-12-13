@@ -100,8 +100,8 @@ export default {
                     .map((entry, entryIdx) => {
                         const color = colors.stringToColors(entry.title) 
                         return{
-                            ...entry,
                             color,
+                            ...entry,
                             column,
                             columnIdx,
                             level: levels[entryIdx]
@@ -144,14 +144,4 @@ div.agenda td,th{
     width: calc(100% / var(--agenda-interval));
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-.agenda-body::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.agenda-body {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
 </style>
