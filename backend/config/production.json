@@ -1,4 +1,6 @@
 {
-  "host": "enseeiht-calandar-app.feathersjs.com",
-  "port": "PORT"
+  "postgres": {
+    "client": "pg",
+    "connection": "postgres://postgres:postgres@enseeiht_agenda_db:5432/fs-enseeiht-agenda"
+  }
 }
