@@ -58,7 +58,6 @@ export default {
                 t.setMinutes(0);
                 t.setSeconds(0);
                 t.setMilliseconds(0);
-                console.log(t);
                 return {
                     time:t,
                     dayName: DAYS_OF_THE_WEEK[t.getDay()],

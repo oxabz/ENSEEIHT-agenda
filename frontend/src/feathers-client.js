@@ -4,7 +4,7 @@ import auth from '@feathersjs/authentication-client'
 import io from 'socket.io-client'
 import { iff, discard } from 'feathers-hooks-common'
 
-const socket = io('http://localhost:3030', { transports: ['websocket'] })
+const socket = io()
 
 const feathersClient = feathers()
   .configure(socketio(socket))
